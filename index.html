@@ -32,7 +32,7 @@
         <span>Catalog</span>
       </button>
 
-      <a href="#" class="brand-logo">SATTVA</a>
+      <a href="#" class="brand-logo" onclick="resetFilters()">SATTVA</a>
 
       <div class="header-actions">
         <button class="icon-btn" title="Saved Items" onclick="alert('Wishlist items are saved locally in your browser.')">
@@ -76,15 +76,8 @@
       </div>
     </section>
 
-    <!-- Circular Category Bar (11 Items: All + 10 Categories) -->
+    <!-- Circular Category Bar (catimage2.png to catimage11.png) -->
     <section class="category-strip" id="categoryStrip">
-      <div class="cat-item active" onclick="selectCategory('All', this)">
-        <div class="cat-circle">
-          <img src="catimage1.png" alt="All Items">
-        </div>
-        <span class="cat-label">All Items</span>
-      </div>
-
       <div class="cat-item" onclick="selectCategory('Chanting Bag', this)">
         <div class="cat-circle">
           <img src="catimage2.png" alt="Chanting Bag">
@@ -159,7 +152,7 @@
     <!-- Curated Collections -->
     <div class="section-header">
       <h2 class="section-title">Curated Sanctuaries</h2>
-      <a href="#featuredSection" class="section-link">View All</a>
+      <a href="#featuredSection" class="section-link" onclick="resetFilters()">View All</a>
     </div>
     <section class="collections-grid">
       <div class="collection-card" onclick="selectCategory('Chanting Bag')">
