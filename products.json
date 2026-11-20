@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "name": "Sample Offering Title",
+    "category": "Diyas & Lamps",
+    "subtitle": "Material · Dimensions",
+    "price": 999,
+    "tag": "New",
+    "swatches": ["#8C6239", "#231F20"],
+    "image": "https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=600&q=80"
+  }
+]
