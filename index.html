@@ -53,7 +53,7 @@
 
     <div class="search-wrapper">
       <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Search for brass diyas, rudraksha, incense, temple idols, prayer beads..." oninput="filterProducts()">
+        <input type="text" id="searchInput" placeholder="Search for chanting bags, beads, dhoti kurtas, gopi dress, kanti mala, books..." oninput="filterProducts()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#78716C" stroke-width="1.8">
           <circle cx="11" cy="11" r="8"/>
           <line x1="21" y1="21" x2="16.65" y2="16.65"/>
@@ -68,63 +68,91 @@
       <div class="hero-content">
         <span class="hero-eyebrow">Sacred Tradition</span>
         <h1 class="hero-title">Timeless Devotion</h1>
-        <p class="hero-subtitle">Handcrafted brass lamps, pure temple incense, and consecrated prayer essentials crafted for daily sanctuary rituals.</p>
+        <p class="hero-subtitle">Handcrafted chanting bags, Tulsi beads, traditional dhoti kurtas, Gopi dresses, and sacred literature for daily sadhana.</p>
         <button class="btn-primary" onclick="scrollToProducts()">Explore the Collection</button>
       </div>
       <div class="hero-visual">
-        <img src="https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=900&q=80" alt="Traditional Brass Oil Lamp and Sacred Flowers">
+        <img src="https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=900&q=80" alt="Traditional Devotional Offerings">
       </div>
     </section>
 
-    <!-- Circular Category Bar -->
+    <!-- Circular Category Bar (11 Items: All + 10 Categories) -->
     <section class="category-strip" id="categoryStrip">
       <div class="cat-item active" onclick="selectCategory('All', this)">
         <div class="cat-circle">
-          <img src="https://images.unsplash.com/photo-1609619385002-f40f1df9b7eb?auto=format&fit=crop&w=240&q=80" alt="All Offerings">
+          <img src="catimage1.png" alt="All Items">
         </div>
         <span class="cat-label">All Items</span>
       </div>
-      <div class="cat-item" onclick="selectCategory('Diyas & Lamps', this)">
+
+      <div class="cat-item" onclick="selectCategory('Chanting Bag', this)">
         <div class="cat-circle">
-          <img src="https://images.unsplash.com/photo-1574265935933-4a9a80f9b6f0?auto=format&fit=crop&w=240&q=80" alt="Brass Diyas">
+          <img src="catimage2.png" alt="Chanting Bag">
         </div>
-        <span class="cat-label">Diyas</span>
+        <span class="cat-label">Chanting Bag</span>
       </div>
-      <div class="cat-item" onclick="selectCategory('Incense & Dhoop', this)">
+
+      <div class="cat-item" onclick="selectCategory('Beads', this)">
         <div class="cat-circle">
-          <img src="https://images.unsplash.com/photo-1602928321679-560bb453f190?auto=format&fit=crop&w=240&q=80" alt="Incense">
+          <img src="catimage3.png" alt="Beads">
         </div>
-        <span class="cat-label">Incense</span>
+        <span class="cat-label">Beads</span>
       </div>
-      <div class="cat-item" onclick="selectCategory('Idols & Murti', this)">
+
+      <div class="cat-item" onclick="selectCategory('Worship Materials', this)">
         <div class="cat-circle">
-          <img src="https://images.unsplash.com/photo-1567591370504-80142b28f1c1?auto=format&fit=crop&w=240&q=80" alt="Brass Idols">
+          <img src="catimage4.png" alt="Worship Materials">
         </div>
-        <span class="cat-label">Idols</span>
+        <span class="cat-label">Worship Materials</span>
       </div>
-      <div class="cat-item" onclick="selectCategory('Japa Malas', this)">
+
+      <div class="cat-item" onclick="selectCategory('Dhoti Kurtas', this)">
         <div class="cat-circle">
-          <img src="https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?auto=format&fit=crop&w=240&q=80" alt="Japa Malas">
+          <img src="catimage5.png" alt="Dhoti Kurtas">
         </div>
-        <span class="cat-label">Japa Malas</span>
+        <span class="cat-label">Dhoti Kurtas</span>
       </div>
-      <div class="cat-item" onclick="selectCategory('Puja Vessels', this)">
+
+      <div class="cat-item" onclick="selectCategory('Gopi Dress', this)">
         <div class="cat-circle">
-          <img src="https://images.unsplash.com/photo-1590073844006-33379778ae09?auto=format&fit=crop&w=240&q=80" alt="Copper Vessels">
+          <img src="catimage6.png" alt="Gopi Dress">
         </div>
-        <span class="cat-label">Vessels</span>
+        <span class="cat-label">Gopi Dress</span>
       </div>
-      <div class="cat-item" onclick="selectCategory('Sacred Texts', this)">
+
+      <div class="cat-item" onclick="selectCategory('Perfumes', this)">
         <div class="cat-circle">
-          <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=240&q=80" alt="Sacred Texts">
+          <img src="catimage7.png" alt="Perfumes">
         </div>
-        <span class="cat-label">Scriptures</span>
+        <span class="cat-label">Perfumes</span>
       </div>
-      <div class="cat-item" onclick="selectCategory('Altar Decor', this)">
+
+      <div class="cat-item" onclick="selectCategory('Kanti Mala', this)">
         <div class="cat-circle">
-          <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=240&q=80" alt="Altar Textiles">
+          <img src="catimage8.png" alt="Kanti Mala">
         </div>
-        <span class="cat-label">Altar Cloths</span>
+        <span class="cat-label">Kanti Mala</span>
+      </div>
+
+      <div class="cat-item" onclick="selectCategory('Lockets', this)">
+        <div class="cat-circle">
+          <img src="catimage9.png" alt="Lockets">
+        </div>
+        <span class="cat-label">Lockets</span>
+      </div>
+
+      <div class="cat-item" onclick="selectCategory('Photos', this)">
+        <div class="cat-circle">
+          <img src="catimage10.png" alt="Photos">
+        </div>
+        <span class="cat-label">Photos</span>
+      </div>
+
+      <div class="cat-item" onclick="selectCategory('Books', this)">
+        <div class="cat-circle">
+          <img src="catimage11.png" alt="Books">
+        </div>
+        <span class="cat-label">Books</span>
       </div>
     </section>
 
@@ -134,32 +162,32 @@
       <a href="#featuredSection" class="section-link">View All</a>
     </div>
     <section class="collections-grid">
-      <div class="collection-card" onclick="selectCategory('Diyas & Lamps')">
-        <img src="https://images.unsplash.com/photo-1514222134-b57cbb8ce073?auto=format&fit=crop&w=600&q=80" alt="Morning Aarti">
+      <div class="collection-card" onclick="selectCategory('Chanting Bag')">
+        <img src="catimage2.png" alt="Japa & Chanting">
         <div class="collection-info">
-          <h3>Morning<br>Sandhya</h3>
-          <span>Shop Brass Lamps &rarr;</span>
+          <h3>Japa &amp;<br>Sadhana</h3>
+          <span>Chanting Bags &amp; Beads &rarr;</span>
         </div>
       </div>
-      <div class="collection-card" onclick="selectCategory('Incense & Dhoop')">
-        <img src="https://images.unsplash.com/photo-1600618528240-fb9fc964b853?auto=format&fit=crop&w=600&q=80" alt="Temple Aromatics">
+      <div class="collection-card" onclick="selectCategory('Dhoti Kurtas')">
+        <img src="catimage5.png" alt="Traditional Attire">
         <div class="collection-info">
-          <h3>Temple<br>Aromatics</h3>
-          <span>Pure Sandal &amp; Sambrani &rarr;</span>
+          <h3>Dhoti &amp;<br>Kurtas</h3>
+          <span>Handloom Temple Wear &rarr;</span>
         </div>
       </div>
-      <div class="collection-card" onclick="selectCategory('Japa Malas')">
-        <img src="https://images.unsplash.com/photo-1528715471579-d1bcf0ba5e83?auto=format&fit=crop&w=600&q=80" alt="Meditation & Japa">
+      <div class="collection-card" onclick="selectCategory('Gopi Dress')">
+        <img src="catimage6.png" alt="Gopi Dress">
         <div class="collection-info">
-          <h3>Dhyana &amp;<br>Japa</h3>
-          <span>Rudraksha &amp; Tulsi &rarr;</span>
+          <h3>Festive<br>Gopi Dress</h3>
+          <span>Explore Collection &rarr;</span>
         </div>
       </div>
-      <div class="collection-card" onclick="selectCategory('Puja Vessels')">
-        <img src="https://images.unsplash.com/photo-1584589167171-541ce45f1eea?auto=format&fit=crop&w=600&q=80" alt="Kashi Copperware">
+      <div class="collection-card" onclick="selectCategory('Books')">
+        <img src="catimage11.png" alt="Sacred Books">
         <div class="collection-info">
-          <h3>Kashi<br>Copperware</h3>
-          <span>Kalash &amp; Panchapatra &rarr;</span>
+          <h3>Sacred<br>Literature</h3>
+          <span>Scriptures &amp; Guides &rarr;</span>
         </div>
       </div>
     </section>
@@ -176,10 +204,10 @@
     <!-- Mid Promotional Banner -->
     <section class="promo-banner">
       <div class="promo-left">
-        <small>Festive &amp; Daily Rituals</small>
-        <h2>Up to 20% Off Altar Sets</h2>
+        <small>Festive &amp; Daily Sadhana</small>
+        <h2>Traditional Attire &amp; Japa Sets</h2>
       </div>
-      <p class="promo-center">Curated Panchamrit copper thalis and hand-cast Kumbakonam brass lamps prepared for auspicious occasions.</p>
+      <p class="promo-center">Handwoven dhoti kurtas, Gopi dresses, Tulsi kanti malas, and consecrated japa essentials delivered across India.</p>
       <button class="btn-primary" onclick="scrollToProducts()">Shop Offerings</button>
     </section>
 
@@ -207,7 +235,7 @@
         </div>
         <div class="trust-text">
           <h4>Authentic Craft</h4>
-          <p>Pure virgin brass, copper &amp; natural herbs</p>
+          <p>Original Tulsi wood, handloom &amp; pure attars</p>
         </div>
       </div>
       <div class="trust-item">
@@ -230,7 +258,7 @@
         </div>
         <div class="trust-text">
           <h4>Seva Support</h4>
-          <p>Dedicated assistance for temple orders</p>
+          <p>Dedicated assistance for temple &amp; bulk orders</p>
         </div>
       </div>
     </section>
@@ -260,15 +288,15 @@
       <div class="footer-grid">
         <div>
           <div class="footer-brand">SATTVA</div>
-          <p class="footer-desc">Sacred vessels, pure temple aromatics, and traditional devotional articles crafted with reverence.</p>
+          <p class="footer-desc">Sacred vessels, traditional devotional attire, japa beads, and spiritual literature crafted with reverence.</p>
         </div>
         <div class="footer-col">
           <h4>Offerings</h4>
           <ul>
-            <li><a href="#featuredSection">Brass Diyas</a></li>
-            <li><a href="#featuredSection">Incense &amp; Dhoop</a></li>
-            <li><a href="#featuredSection">Japa Malas</a></li>
-            <li><a href="#featuredSection">Puja Vessels</a></li>
+            <li><a href="#featuredSection" onclick="selectCategory('Chanting Bag')">Chanting Bags</a></li>
+            <li><a href="#featuredSection" onclick="selectCategory('Beads')">Japa Beads &amp; Kanti Mala</a></li>
+            <li><a href="#featuredSection" onclick="selectCategory('Dhoti Kurtas')">Dhoti Kurtas &amp; Gopi Dress</a></li>
+            <li><a href="#featuredSection" onclick="selectCategory('Books')">Sacred Books</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -286,7 +314,7 @@
             <li><a href="#">Shipping &amp; Delivery</a></li>
             <li><a href="#">Track Order</a></li>
             <li><a href="#">Replacement Policy</a></li>
-            <li><a href="#">Care for Brass</a></li>
+            <li><a href="#">Care Instructions</a></li>
           </ul>
         </div>
         <div class="footer-col">
