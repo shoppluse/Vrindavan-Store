@@ -3,7 +3,7 @@
 // ==========================================
 const STORE_CONFIG = {
   googleSheetUrl: "https://script.google.com/macros/s/AKfycbyvWqPvoGLYWQgAhlkJVqxIeU9qGn2tGst-aDsumzuHzRa-9pM5Gzke3Dw3IKFBobA/exec",
-  whatsappNumber: "919876543210" // Replace with 91 + your 10-digit WhatsApp number
+  whatsappNumber: "919945243930" // Replace with 91 + your 10-digit WhatsApp number
 };
 
 let products = [];
