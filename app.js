@@ -3,7 +3,7 @@
 // ==========================================
 const STORE_CONFIG = {
   googleSheetUrl: "https://script.google.com/macros/s/AKfycbyvWqPvoGLYWQgAhlkJVqxIeU9qGn2tGst-aDsumzuHzRa-9pM5Gzke3Dw3IKFBobA/exec",
-  whatsappNumber: "919945243930" // Replace with 91 + your 10-digit WhatsApp number
+  whatsappNumber: "919945243930"
 };
 
 let products = [];
@@ -103,14 +103,89 @@ function resetFilters() {
   activeCategory = "All";
   document.getElementById("searchInput").value = "";
   document.getElementById("gridHeading").textContent = "Sacred Offerings";
-  document.querySelectorAll(".cat-item").forEach((el, idx) => {
-    el.classList.toggle("active", idx === 0);
-  });
+  document.querySelectorAll(".cat-item").forEach(el => el.classList.remove("active"));
   renderProducts(products);
 }
 
 function scrollToProducts() {
   document.getElementById("featuredSection").scrollIntoView({ behavior: "smooth" });
+}
+
+// Smooth Infinite Auto-Glide + Manual Left/Right Swipe for Category Strip
+function initCategoryCarousel() {
+  const strip = document.getElementById("categoryStrip");
+  if (!strip) return;
+
+  // Duplicate items once for seamless infinite loop
+  const originalItems = Array.from(strip.children);
+  originalItems.forEach(item => {
+    const clone = item.cloneNode(true);
+    strip.appendChild(clone);
+  });
+
+  let isPaused = false;
+  let isDown = false;
+  let startX = 0;
+  let scrollLeftStart = 0;
+  let hasDragged = false;
+  const speed = 0.45; // Gentle slow motion speed
+
+  strip.addEventListener("mouseenter", () => (isPaused = true));
+  strip.addEventListener("mouseleave", () => {
+    isPaused = false;
+    isDown = false;
+    strip.classList.remove("dragging");
+  });
+  strip.addEventListener("touchstart", () => (isPaused = true), { passive: true });
+  strip.addEventListener("touchend", () => {
+    setTimeout(() => (isPaused = false), 1200);
+  });
+
+  strip.addEventListener("mousedown", e => {
+    isDown = true;
+    hasDragged = false;
+    strip.classList.add("dragging");
+    startX = e.pageX - strip.offsetLeft;
+    scrollLeftStart = strip.scrollLeft;
+  });
+
+  strip.addEventListener("mousemove", e => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - strip.offsetLeft;
+    const walk = (x - startX) * 1.4;
+    if (Math.abs(walk) > 5) hasDragged = true;
+    strip.scrollLeft = scrollLeftStart - walk;
+  });
+
+  strip.addEventListener("mouseup", () => {
+    isDown = false;
+    strip.classList.remove("dragging");
+  });
+
+  strip.addEventListener(
+    "click",
+    e => {
+      if (hasDragged) {
+        e.stopPropagation();
+        hasDragged = false;
+      }
+    },
+    true
+  );
+
+  function step() {
+    if (!isPaused && !isDown) {
+      strip.scrollLeft += speed;
+      const halfWidth = strip.scrollWidth / 2;
+      if (strip.scrollLeft >= halfWidth) {
+        strip.scrollLeft -= halfWidth;
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  requestAnimationFrame(step);
 }
 
 // Checkout Drawer Logic
@@ -294,7 +369,7 @@ async function handleOrderSubmit(e) {
   submitBtn.disabled = false;
 
   // Automatically open WhatsApp in a new tab
-  if (STORE_CONFIG.whatsappNumber && STORE_CONFIG.whatsappNumber !== "919945243930") {
+  if (STORE_CONFIG.whatsappNumber) {
     window.open(waLink, "_blank", "noopener");
   }
 }
@@ -315,5 +390,6 @@ if ("serviceWorker" in navigator) {
   });
 }
 
-// Initialize storefront
+// Initialize storefront and category carousel
+initCategoryCarousel();
 loadProducts();
