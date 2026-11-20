@@ -383,6 +383,79 @@ function showRecentOrder() {
   alert(`Latest Order: #${last.orderNum}\nItem: ${last.qty}x ${last.product}\nTotal: ₹${last.total}\nMode: ${last.paymentMode}`);
 }
 
+// Newsletter Subscription
+function handleNewsletterSubmit(e) {
+  e.preventDefault();
+  const emailInput = document.getElementById("newsletterEmail");
+  const email = emailInput.value.trim();
+  if (!email) return;
+
+  const subscribers = JSON.parse(localStorage.getItem("sattva_subscribers") || "[]");
+  if (!subscribers.includes(email)) {
+    subscribers.push(email);
+    localStorage.setItem("sattva_subscribers", JSON.stringify(subscribers));
+  }
+
+  alert(`Thank you! ${email} is now subscribed to SATTVA Panchang & New Arrival alerts.`);
+  e.target.reset();
+}
+
+// Store Policy & Seva Info Drawer
+const INFO_PAGES = {
+  artisans: {
+    title: "Artisan Clusters",
+    body: "<p>Every SATTVA offering is crafted in partnership with traditional weaver and woodcraft families across Vrindavan, Kashi, and South India, ensuring fair wages and authentic temple-grade workmanship.</p>"
+  },
+  purity: {
+    title: "Purity Standards",
+    body: "<p>Our Japa Malas and Kanti Malas are turned from genuine sacred Tulsi wood, our Dhoti Kurtas and Gopi Dresses use breathable handloom cotton, and our perfumes are 100% alcohol-free natural attars.</p>"
+  },
+  temple: {
+    title: "Temple & Bulk Supplies",
+    body: "<p>Planning festival distributions, Gita Jayanti book seva, or temple yatra kits? Reach out directly on WhatsApp for wholesale pricing and custom sacred packaging.</p><br><a href='https://wa.me/919945243930?text=Hare%20Krishna!%20I%20would%20like%20to%20enquire%20about%20bulk%20/%20temple%20supplies.' target='_blank' rel='noopener' class='btn-primary' style='display:inline-block;'>Enquire on WhatsApp</a>"
+  },
+  contact: {
+    title: "Contact Seva Desk",
+    body: "<p><strong>WhatsApp &amp; Phone:</strong> +91 99452 43930<br><strong>Dispatch Hours:</strong> Monday – Saturday, 9:30 AM to 6:30 PM IST</p><br><a href='https://wa.me/919945243930?text=Hare%20Krishna!%20I%20have%20a%20question%20regarding%20SATTVA%20offerings.' target='_blank' rel='noopener' class='btn-primary' style='display:inline-block;'>Chat on WhatsApp</a>"
+  },
+  shipping: {
+    title: "Shipping & Delivery",
+    body: "<p>Orders are dispatched within 24–48 hours via insured Pan-India courier partners. Delivery typically takes 3–6 business days depending on your PIN code. Enjoy free shipping on all orders above ₹999 (₹60 flat shipping below ₹999).</p>"
+  },
+  track: {
+    title: "Track Your Order",
+    body: "<p>Share your Order ID (e.g., <strong>#STV-1042</strong>) with our Seva Desk on WhatsApp to receive your live courier tracking link immediately.</p><br><a href='https://wa.me/919945243930?text=Hare%20Krishna!%20Please%20share%20the%20tracking%20status%20for%20my%20Order%20ID:%20' target='_blank' rel='noopener' class='btn-primary' style='display:inline-block;'>Track via WhatsApp</a>"
+  },
+  replacement: {
+    title: "Replacement Policy",
+    body: "<p>If an item arrives damaged in transit or differs from your order, message us on WhatsApp within 48 hours of delivery with an unboxing photo and we will arrange a prompt replacement.</p>"
+  },
+  care: {
+    title: "Care Instructions",
+    body: "<p><strong>Tulsi Beads &amp; Kanti Mala:</strong> Keep dry and rub lightly with a drop of pure cow ghee or sandalwood oil occasionally.<br><br><strong>Handloom Dhoti &amp; Gopi Dress:</strong> Gentle cold hand-wash separately in mild detergent and dry in shade.</p>"
+  },
+  privacy: {
+    title: "Privacy Policy",
+    body: "<p>Your name, mobile number, and delivery address are used solely to fulfill and dispatch your SATTVA order. We never sell or share customer details with third-party marketers.</p>"
+  },
+  terms: {
+    title: "Terms of Seva",
+    body: "<p>All product prices are listed in Indian Rupees (INR). Cash on Delivery and UPI orders are confirmed via WhatsApp prior to dispatch.</p>"
+  }
+};
+
+function openInfoModal(key) {
+  const page = INFO_PAGES[key];
+  if (!page) return;
+  document.getElementById("infoModalTitle").textContent = page.title;
+  document.getElementById("infoModalBody").innerHTML = page.body;
+  document.getElementById("infoModalBackdrop").classList.add("open");
+}
+
+function closeInfoModal() {
+  document.getElementById("infoModalBackdrop").classList.remove("open");
+}
+
 // Register Service Worker for PWA
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
