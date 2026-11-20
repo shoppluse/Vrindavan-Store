@@ -1,3 +1,11 @@
+// ==========================================
+// 1. CONFIGURE YOUR RECEIVERS HERE
+// ==========================================
+const STORE_CONFIG = {
+  googleSheetUrl: "https://script.google.com/macros/s/AKfycbyvWqPvoGLYWQgAhlkJVqxIeU9qGn2tGst-aDsumzuHzRa-9pM5Gzke3Dw3IKFBobA/exec",
+  whatsappNumber: "919876543210" // Replace with 91 + your 10-digit WhatsApp number
+};
+
 let products = [];
 let activeCategory = "All";
 let selectedProduct = null;
@@ -201,29 +209,69 @@ function updateBilling() {
     : `Pay ₹${total.toLocaleString("en-IN")} & Buy Now`;
 }
 
-function handleOrderSubmit(e) {
+async function handleOrderSubmit(e) {
   e.preventDefault();
+  const submitBtn = document.getElementById("submitOrderBtn");
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Recording Order...";
+
   const name = document.getElementById("custName").value.trim();
   const phone = document.getElementById("custPhone").value.trim();
   const address = document.getElementById("custAddress").value.trim();
   const pin = document.getElementById("custPin").value.trim();
+  const upiVal = document.getElementById("upiInput").value.trim();
 
   const subtotal = Number(selectedProduct.price) * orderQty;
   const shipping = subtotal >= 999 ? 0 : 60;
   const total = subtotal + shipping;
   const orderNum = "STV-" + Math.floor(1000 + Math.random() * 9000);
+  const paymentDetail = paymentMode === "COD" ? "Cash on Delivery" : `${onlineSubMethod}: ${upiVal}`;
 
-  placedOrders.push({
+  const orderPayload = {
     orderNum,
+    name,
+    phone,
+    address,
+    pin,
     product: selectedProduct.name,
     qty: orderQty,
     total,
     paymentMode,
-    name
-  });
+    paymentDetail
+  };
 
+  // 1. Send order to Google Sheets
+  if (STORE_CONFIG.googleSheetUrl) {
+    try {
+      await fetch(STORE_CONFIG.googleSheetUrl, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(orderPayload)
+      });
+    } catch (err) {
+      console.error("Sheet logging failed:", err);
+    }
+  }
+
+  placedOrders.push(orderPayload);
   document.getElementById("orderCountBadge").textContent = placedOrders.length;
 
+  // 2. Build WhatsApp message URL
+  const waText = [
+    `*NEW ORDER: #${orderNum}*`,
+    `Item: ${orderQty} x ${selectedProduct.name}`,
+    `Total: Rs. ${total.toLocaleString("en-IN")}`,
+    `Payment: ${paymentDetail}`,
+    `---`,
+    `Name: ${name}`,
+    `Phone: ${phone}`,
+    `Address: ${address} - ${pin}`
+  ].join("\n");
+
+  const waLink = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent(waText)}`;
+
+  // 3. Show Receipt inside Drawer + WhatsApp Confirm Button
   document.getElementById("checkoutFormView").style.display = "none";
   document.getElementById("drawerFooter").style.display = "none";
   document.getElementById("drawerTitle").textContent = "Receipt";
@@ -234,12 +282,21 @@ function handleOrderSubmit(e) {
     : `Online payment of <strong>₹${total.toLocaleString("en-IN")}</strong> via <strong>${onlineSubMethod}</strong> has been recorded.`;
 
   document.getElementById("confirmedSummaryText").innerHTML = `
-    Thank you, <strong>${name}</strong>. Your order for <strong>${orderQty} &times; ${selectedProduct.name}</strong> is confirmed.<br><br>
+    Thank you, <strong>${name}</strong>. Your order for <strong>${orderQty} &times; ${selectedProduct.name}</strong> has been logged.<br><br>
     ${modeDescription}<br><br>
-    Dispatching to: ${address} - ${pin} (${phone}).
+    Dispatching to: ${address} - ${pin} (${phone}).<br><br>
+    <a href="${waLink}" target="_blank" rel="noopener" class="btn-primary" style="display:block; text-align:center; margin-top:12px;">
+      Send Confirmation on WhatsApp
+    </a>
   `;
 
   document.getElementById("confirmationView").classList.add("active");
+  submitBtn.disabled = false;
+
+  // Automatically open WhatsApp in a new tab
+  if (STORE_CONFIG.whatsappNumber && STORE_CONFIG.whatsappNumber !== "919945243930") {
+    window.open(waLink, "_blank", "noopener");
+  }
 }
 
 function showRecentOrder() {
