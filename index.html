@@ -1,1 +1,1835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SATTVA | Sacred & Devotional Essentials</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #FAF9F6;
+      --bg-secondary: #F2EFE9;
+      --bg-card: #FFFFFF;
+      --text-primary: #1C1917;
+      --text-secondary: #57534E;
+      --text-muted: #78716C;
+      --accent-dark: #231F20;
+      --accent-gold: #8C6239;
+      --accent-gold-light: #F7F3EE;
+      --border-light: #E7E2D8;
+      --border-strong: #D6CFC2;
+      --success: #2E5A44;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
 
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    /* Announcement Bar */
+    .announcement-bar {
+      background-color: var(--accent-dark);
+      color: #F5F2EB;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 9px 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .announcement-bar span.arrow {
+      opacity: 0.6;
+      font-size: 12px;
+    }
+
+    /* Header */
+    header {
+      background-color: var(--bg-primary);
+      border-bottom: 1px solid var(--border-light);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    .header-top {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 16px 24px 12px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+    }
+
+    .menu-trigger {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      justify-self: start;
+    }
+
+    .brand-logo {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      text-align: center;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      justify-self: end;
+    }
+
+    .icon-btn {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-primary);
+      transition: opacity 0.2s;
+    }
+
+    .icon-btn:hover {
+      opacity: 0.65;
+    }
+
+    .badge-count {
+      position: absolute;
+      top: -6px;
+      right: -8px;
+      background-color: var(--accent-dark);
+      color: #FFFFFF;
+      font-size: 10px;
+      font-weight: 600;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .search-wrapper {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px 14px;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border-strong);
+      background-color: #FFFFFF;
+      padding: 8px 14px;
+    }
+
+    .search-box input {
+      width: 100%;
+      border: none;
+      outline: none;
+      font-family: inherit;
+      font-size: 13px;
+      color: var(--text-primary);
+      background: transparent;
+    }
+
+    .search-box input::placeholder {
+      color: var(--text-muted);
+    }
+
+    /* Container */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Hero Banner */
+    .hero {
+      margin-top: 16px;
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      min-height: 440px;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      padding: 56px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 14px;
+    }
+
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: 54px;
+      font-weight: 400;
+      line-height: 1.06;
+      color: var(--text-primary);
+      margin-bottom: 18px;
+    }
+
+    .hero-subtitle {
+      font-size: 14px;
+      color: var(--text-secondary);
+      max-width: 380px;
+      margin-bottom: 30px;
+      line-height: 1.65;
+    }
+
+    .btn-primary {
+      background-color: var(--accent-dark);
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      display: inline-block;
+      transition: background-color 0.2s;
+    }
+
+    .btn-primary:hover {
+      background-color: #3B3532;
+    }
+
+    .hero-visual {
+      position: relative;
+      background: linear-gradient(135deg, #E8E0D4 0%, #D7CBB8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Circular Categories */
+    .category-strip {
+      padding: 44px 0 36px;
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 16px;
+      text-align: center;
+    }
+
+    .cat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .cat-circle {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .cat-item:hover .cat-circle,
+    .cat-item.active .cat-circle {
+      border-color: var(--accent-gold);
+      transform: translateY(-2px);
+    }
+
+    .cat-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .cat-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+    }
+
+    /* Section Header */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 20px;
+      padding-top: 16px;
+    }
+
+    .section-title {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+    }
+
+    .section-link {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+    }
+
+    .section-link:hover {
+      border-bottom-color: var(--text-primary);
+      color: var(--text-primary);
+    }
+
+    /* Curated Collections (4-col) */
+    .collections-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 48px;
+    }
+
+    .collection-card {
+      position: relative;
+      height: 290px;
+      background-color: var(--bg-secondary);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 24px;
+      border: 1px solid var(--border-light);
+    }
+
+    .collection-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .collection-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(24, 20, 18, 0.72) 0%, rgba(24, 20, 18, 0.12) 60%, transparent 100%);
+    }
+
+    .collection-card:hover img {
+      transform: scale(1.04);
+    }
+
+    .collection-info {
+      position: relative;
+      z-index: 2;
+      color: #FFFFFF;
+    }
+
+    .collection-info h3 {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .collection-info span {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+
+    /* Featured Products Grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 18px;
+      margin-bottom: 48px;
+    }
+
+    .product-card {
+      display: flex;
+      flex-direction: column;
+      background: transparent;
+    }
+
+    .product-media {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .product-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.35s ease;
+    }
+
+    .product-card:hover .product-media img {
+      transform: scale(1.03);
+    }
+
+    .wishlist-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.88);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-primary);
+      z-index: 2;
+    }
+
+    .wishlist-btn.active svg {
+      fill: var(--accent-gold);
+      stroke: var(--accent-gold);
+    }
+
+    .product-tag {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 7px;
+      border: 1px solid var(--border-light);
+    }
+
+    .product-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 3px;
+    }
+
+    .product-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .product-price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .product-price {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .swatches {
+      display: flex;
+      gap: 5px;
+    }
+
+    .swatch {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .buy-now-btn {
+      width: 100%;
+      padding: 9px 12px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--accent-dark);
+      color: var(--accent-dark);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: all 0.2s ease;
+      margin-top: auto;
+    }
+
+    .buy-now-btn:hover {
+      background-color: var(--accent-dark);
+      color: #FFFFFF;
+    }
+
+    /* Mid Promo Banner */
+    .promo-banner {
+      background-color: #EAE3D5;
+      border: 1px solid var(--border-strong);
+      padding: 28px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 44px;
+      gap: 24px;
+    }
+
+    .promo-left small {
+      display: block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 4px;
+    }
+
+    .promo-left h2 {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--text-primary);
+    }
+
+    .promo-center {
+      font-size: 13px;
+      color: var(--text-secondary);
+      max-width: 320px;
+    }
+
+    /* Trust Strip */
+    .trust-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      padding: 28px 0;
+      border-top: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+      margin-bottom: 48px;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .trust-icon {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border-strong);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-gold);
+      flex-shrink: 0;
+    }
+
+    .trust-text h4 {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .trust-text p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Newsletter */
+    .newsletter-band {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      padding: 36px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      margin-bottom: 56px;
+    }
+
+    .newsletter-copy {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .newsletter-copy h3 {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .newsletter-copy p {
+      font-size: 12px;
+      color: var(--text-secondary);
+      max-width: 340px;
+    }
+
+    .newsletter-form {
+      display: flex;
+      flex: 1;
+      max-width: 460px;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 12px 16px;
+      border: 1px solid var(--border-strong);
+      border-right: none;
+      background-color: #FFFFFF;
+      font-family: inherit;
+      font-size: 13px;
+      outline: none;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-light);
+      padding: 48px 0 28px;
+      background-color: var(--bg-primary);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr 1.1fr;
+      gap: 32px;
+      margin-bottom: 40px;
+    }
+
+    .footer-brand {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .footer-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      max-width: 240px;
+      line-height: 1.6;
+    }
+
+    .footer-col h4 {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-col li {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .payment-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .pay-pill {
+      border: 1px solid var(--border-strong);
+      background: #FFFFFF;
+      padding: 4px 8px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--text-primary);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border-light);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Checkout Drawer / Modal */
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(24, 20, 18, 0.52);
+      z-index: 100;
+      display: none;
+      justify-content: flex-end;
+    }
+
+    .drawer-backdrop.open {
+      display: flex;
+    }
+
+    .checkout-drawer {
+      width: 100%;
+      max-width: 460px;
+      background-color: var(--bg-primary);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      border-left: 1px solid var(--border-strong);
+      animation: slideIn 0.25s ease-out;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+
+    .drawer-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .drawer-header h2 {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      font-weight: 500;
+    }
+
+    .close-btn {
+      font-size: 22px;
+      line-height: 1;
+      color: var(--text-secondary);
+      padding: 4px;
+    }
+
+    .drawer-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+    }
+
+    .selected-product-box {
+      display: flex;
+      gap: 16px;
+      padding: 14px;
+      background-color: #FFFFFF;
+      border: 1px solid var(--border-light);
+      margin-bottom: 24px;
+    }
+
+    .selected-product-box img {
+      width: 68px;
+      height: 84px;
+      object-fit: cover;
+      background-color: var(--bg-secondary);
+    }
+
+    .selected-details {
+      flex: 1;
+    }
+
+    .selected-details h4 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .selected-details p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .qty-control {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--border-strong);
+    }
+
+    .qty-control button {
+      width: 26px;
+      height: 26px;
+      font-size: 14px;
+      color: var(--text-primary);
+    }
+
+    .qty-control span {
+      padding: 0 10px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .form-section-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border-strong);
+      background-color: #FFFFFF;
+      font-family: inherit;
+      font-size: 13px;
+      color: var(--text-primary);
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent-dark);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* Payment Selector Cards */
+    .payment-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .payment-option {
+      border: 1px solid var(--border-strong);
+      background-color: #FFFFFF;
+      padding: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .payment-option.selected {
+      border-color: var(--accent-dark);
+      background-color: var(--accent-gold-light);
+    }
+
+    .payment-option input {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .payment-option-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .radio-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1.5px solid var(--accent-dark);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .payment-option.selected .radio-dot::after {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: var(--accent-dark);
+    }
+
+    .payment-option-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Online Payment Details Sub-box */
+    .online-pay-panel {
+      background-color: #FFFFFF;
+      border: 1px solid var(--border-strong);
+      padding: 14px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .online-pay-panel.visible {
+      display: block;
+    }
+
+    .upi-methods {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .upi-chip {
+      flex: 1;
+      padding: 7px;
+      border: 1px solid var(--border-strong);
+      font-size: 11px;
+      font-weight: 600;
+      text-align: center;
+      background: var(--bg-primary);
+    }
+
+    .upi-chip.active {
+      border-color: var(--accent-dark);
+      background: var(--accent-dark);
+      color: #FFFFFF;
+    }
+
+    .bill-summary {
+      border-top: 1px solid var(--border-light);
+      padding-top: 14px;
+      margin-top: 10px;
+    }
+
+    .bill-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .bill-row.total {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      border-top: 1px solid var(--border-light);
+      padding-top: 10px;
+      margin-top: 6px;
+    }
+
+    .drawer-footer {
+      padding: 18px 24px;
+      border-top: 1px solid var(--border-light);
+      background-color: #FFFFFF;
+    }
+
+    .submit-order-btn {
+      width: 100%;
+      background-color: var(--accent-dark);
+      color: #FFFFFF;
+      padding: 15px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .submit-order-btn:hover {
+      background-color: #383230;
+    }
+
+    /* Order Confirmation Screen */
+    .confirmation-view {
+      text-align: center;
+      padding: 36px 16px;
+      display: none;
+    }
+
+    .confirmation-view.active {
+      display: block;
+    }
+
+    .check-circle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background-color: var(--success);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+    }
+
+    .confirmation-view h3 {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .order-id-tag {
+      display: inline-block;
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-strong);
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+
+    .confirmation-view p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .collections-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .category-strip {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .hero {
+        grid-template-columns: 1fr;
+      }
+      .hero-visual {
+        min-height: 300px;
+      }
+      .trust-strip,
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .hero-content {
+        padding: 36px 24px;
+      }
+      .hero-title {
+        font-size: 40px;
+      }
+      .promo-banner,
+      .newsletter-band {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .payment-options {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement -->
+  <div class="announcement-bar">
+    <span class="arrow">&lsaquo;</span>
+    <span>Free Sacred Packaging &amp; Shipping on Orders Above ₹999</span>
+    <span class="arrow">&rsaquo;</span>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-top">
+      <button class="menu-trigger" onclick="scrollToProducts()">
+        <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-width="1.5">
+          <line x1="0" y1="1" x2="18" y2="1"/>
+          <line x1="0" y1="7" x2="18" y2="7"/>
+          <line x1="0" y1="13" x2="18" y2="13"/>
+        </svg>
+        <span>Catalog</span>
+      </button>
+
+      <a href="#" class="brand-logo">SATTVA</a>
+
+      <div class="header-actions">
+        <button class="icon-btn" title="Saved Items" onclick="alert('Wishlist items are saved locally in your browser.')">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </button>
+        <button class="icon-btn" title="Orders" onclick="showRecentOrder()">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span class="badge-count" id="orderCountBadge">0</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="search-wrapper">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search for brass diyas, rudraksha, incense, temple idols, prayer beads..." oninput="filterProducts()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#78716C" stroke-width="1.8">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <span class="hero-eyebrow">Sacred Tradition</span>
+        <h1 class="hero-title">Timeless Devotion</h1>
+        <p class="hero-subtitle">Handcrafted brass lamps, pure temple incense, and consecrated prayer essentials crafted for daily sanctuary rituals.</p>
+        <button class="btn-primary" onclick="scrollToProducts()">Explore the Collection</button>
+      </div>
+      <div class="hero-visual">
+        <img src="https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=900&q=80" alt="Traditional Brass Oil Lamp and Sacred Flowers">
+      </div>
+    </section>
+
+    <!-- Circular Category Bar -->
+    <section class="category-strip" id="categoryStrip">
+      <div class="cat-item active" onclick="selectCategory('All', this)">
+        <div class="cat-circle">
+          <img src="https://images.unsplash.com/photo-1609619385002-f40f1df9b7eb?auto=format&fit=crop&w=240&q=80" alt="All Offerings">
+        </div>
+        <span class="cat-label">All Items</span>
+      </div>
+      <div class="cat-item" onclick="selectCategory('Diyas & Lamps', this)">
+        <div class="cat-circle">
+          <img src="https://images.unsplash.com/photo-1574265935933-4a9a80f9b6f0?auto=format&fit=crop&w=240&q=80" alt="Brass Diyas">
+        </div>
+        <span class="cat-label">Diyas</span>
+      </div>
+      <div class="cat-item" onclick="selectCategory('Incense & Dhoop', this)">
+        <div class="cat-circle">
+          <img src="https://images.unsplash.com/photo-1602928321679-560bb453f190?auto=format&fit=crop&w=240&q=80" alt="Incense">
+        </div>
+        <span class="cat-label">Incense</span>
+      </div>
+      <div class="cat-item" onclick="selectCategory('Idols & Murti', this)">
+        <div class="cat-circle">
+          <img src="https://images.unsplash.com/photo-1567591370504-80142b28f1c1?auto=format&fit=crop&w=240&q=80" alt="Brass Idols">
+        </div>
+        <span class="cat-label">Idols</span>
+      </div>
+      <div class="cat-item" onclick="selectCategory('Japa Malas', this)">
+        <div class="cat-circle">
+          <img src="https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?auto=format&fit=crop&w=240&q=80" alt="Japa Malas">
+        </div>
+        <span class="cat-label">Japa Malas</span>
+      </div>
+      <div class="cat-item" onclick="selectCategory('Puja Vessels', this)">
+        <div class="cat-circle">
+          <img src="https://images.unsplash.com/photo-1590073844006-33379778ae09?auto=format&fit=crop&w=240&q=80" alt="Copper Vessels">
+        </div>
+        <span class="cat-label">Vessels</span>
+      </div>
+      <div class="cat-item" onclick="selectCategory('Sacred Texts', this)">
+        <div class="cat-circle">
+          <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=240&q=80" alt="Sacred Texts">
+        </div>
+        <span class="cat-label">Scriptures</span>
+      </div>
+      <div class="cat-item" onclick="selectCategory('Altar Decor', this)">
+        <div class="cat-circle">
+          <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=240&q=80" alt="Altar Textiles">
+        </div>
+        <span class="cat-label">Altar Cloths</span>
+      </div>
+    </section>
+
+    <!-- Curated Collections -->
+    <div class="section-header">
+      <h2 class="section-title">Curated Sanctuaries</h2>
+      <a href="#featuredSection" class="section-link">View All</a>
+    </div>
+    <section class="collections-grid">
+      <div class="collection-card" onclick="selectCategory('Diyas & Lamps')">
+        <img src="https://images.unsplash.com/photo-1514222134-b57cbb8ce073?auto=format&fit=crop&w=600&q=80" alt="Morning Aarti">
+        <div class="collection-info">
+          <h3>Morning<br>Sandhya</h3>
+          <span>Shop Brass Lamps &rarr;</span>
+        </div>
+      </div>
+      <div class="collection-card" onclick="selectCategory('Incense & Dhoop')">
+        <img src="https://images.unsplash.com/photo-1600618528240-fb9fc964b853?auto=format&fit=crop&w=600&q=80" alt="Temple Aromatics">
+        <div class="collection-info">
+          <h3>Temple<br>Aromatics</h3>
+          <span>Pure Sandal &amp; Sambrani &rarr;</span>
+        </div>
+      </div>
+      <div class="collection-card" onclick="selectCategory('Japa Malas')">
+        <img src="https://images.unsplash.com/photo-1528715471579-d1bcf0ba5e83?auto=format&fit=crop&w=600&q=80" alt="Meditation & Japa">
+        <div class="collection-info">
+          <h3>Dhyana &amp;<br>Japa</h3>
+          <span>Rudraksha &amp; Tulsi &rarr;</span>
+        </div>
+      </div>
+      <div class="collection-card" onclick="selectCategory('Puja Vessels')">
+        <img src="https://images.unsplash.com/photo-1584589167171-541ce45f1eea?auto=format&fit=crop&w=600&q=80" alt="Kashi Copperware">
+        <div class="collection-info">
+          <h3>Kashi<br>Copperware</h3>
+          <span>Kalash &amp; Panchapatra &rarr;</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Picks / Storefront -->
+    <div class="section-header" id="featuredSection">
+      <h2 class="section-title" id="gridHeading">Sacred Offerings</h2>
+      <button class="section-link" onclick="resetFilters()">Show All (6)</button>
+    </div>
+    <section class="products-grid" id="productsGrid">
+      <!-- Rendered dynamically by JS -->
+    </section>
+
+    <!-- Mid Promotional Banner -->
+    <section class="promo-banner">
+      <div class="promo-left">
+        <small>Festive &amp; Daily Rituals</small>
+        <h2>Up to 20% Off Altar Sets</h2>
+      </div>
+      <p class="promo-center">Curated Panchamrit copper thalis and hand-cast Kumbakonam brass lamps prepared for auspicious occasions.</p>
+      <button class="btn-primary" onclick="scrollToProducts()">Shop Offerings</button>
+    </section>
+
+    <!-- Trust Indicators -->
+    <section class="trust-strip">
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <rect x="1" y="3" width="15" height="13"/>
+            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+            <circle cx="5.5" cy="18.5" r="2.5"/>
+            <circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+        </div>
+        <div class="trust-text">
+          <h4>Pan-India Dispatch</h4>
+          <p>Carefully cushioned &amp; insured delivery</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <div class="trust-text">
+          <h4>Authentic Craft</h4>
+          <p>Pure virgin brass, copper &amp; natural herbs</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <rect x="2" y="5" width="20" height="14" rx="2"/>
+            <line x1="2" y1="10" x2="22" y2="10"/>
+          </svg>
+        </div>
+        <div class="trust-text">
+          <h4>COD &amp; Instant UPI</h4>
+          <p>Pay online or cash at your doorstep</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <div class="trust-text">
+          <h4>Seva Support</h4>
+          <p>Dedicated assistance for temple orders</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter-band">
+      <div class="newsletter-copy">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#8C6239" stroke-width="1.4">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        <div>
+          <h3>Panchang &amp; New Arrivals</h3>
+          <p>Receive reminders for Ekadashi, Purnima, and seasonal artisan craft releases.</p>
+        </div>
+      </div>
+      <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed to Sattva Panchang updates.'); this.reset();">
+        <input type="email" placeholder="Enter your email address" required>
+        <button type="submit" class="btn-primary">Subscribe</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">SATTVA</div>
+          <p class="footer-desc">Sacred vessels, pure temple aromatics, and traditional devotional articles crafted with reverence.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Offerings</h4>
+          <ul>
+            <li><a href="#featuredSection">Brass Diyas</a></li>
+            <li><a href="#featuredSection">Incense &amp; Dhoop</a></li>
+            <li><a href="#featuredSection">Japa Malas</a></li>
+            <li><a href="#featuredSection">Puja Vessels</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Lineage</h4>
+          <ul>
+            <li><a href="#">Artisan Clusters</a></li>
+            <li><a href="#">Purity Standards</a></li>
+            <li><a href="#">Temple Supplies</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Customer Seva</h4>
+          <ul>
+            <li><a href="#">Shipping &amp; Delivery</a></li>
+            <li><a href="#">Track Order</a></li>
+            <li><a href="#">Replacement Policy</a></li>
+            <li><a href="#">Care for Brass</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Accepted Modes</h4>
+          <div class="payment-badges">
+            <span class="pay-pill">COD</span>
+            <span class="pay-pill">UPI</span>
+            <span class="pay-pill">RUPAY</span>
+            <span class="pay-pill">VISA</span>
+            <span class="pay-pill">MASTERCARD</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 SATTVA DEVOTIONAL STORE. All Rights Reserved.</span>
+        <span>Privacy Policy &nbsp;&middot;&nbsp; Terms of Seva</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Buy Now / Checkout Drawer -->
+  <div class="drawer-backdrop" id="checkoutBackdrop" onclick="closeDrawerOnOutside(event)">
+    <aside class="checkout-drawer">
+      <div class="drawer-header">
+        <h2 id="drawerTitle">Complete Offering</h2>
+        <button class="close-btn" onclick="closeCheckout()" aria-label="Close">&times;</button>
+      </div>
+
+      <div class="drawer-body">
+        <!-- Order Form View -->
+        <div id="checkoutFormView">
+          <!-- Selected Product Summary -->
+          <div class="selected-product-box">
+            <img id="modalProductImg" src="" alt="">
+            <div class="selected-details">
+              <h4 id="modalProductName">Product Name</h4>
+              <p id="modalProductMeta">Category &middot; Pure Craft</p>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div class="qty-control">
+                  <button type="button" onclick="changeQty(-1)">&minus;</button>
+                  <span id="modalQty">1</span>
+                  <button type="button" onclick="changeQty(1)">+</button>
+                </div>
+                <strong id="modalUnitPrice">₹0</strong>
+              </div>
+            </div>
+          </div>
+
+          <form id="orderForm" onsubmit="handleOrderSubmit(event)">
+            <div class="form-section-title">1. Delivery Details</div>
+            <div class="form-group">
+              <label for="custName">Full Name</label>
+              <input type="text" id="custName" placeholder="Enter recipient name" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="custPhone">Mobile Number</label>
+                <input type="tel" id="custPhone" placeholder="10-digit mobile" pattern="[0-9]{10}" required>
+              </div>
+              <div class="form-group">
+                <label for="custPin">PIN Code</label>
+                <input type="text" id="custPin" placeholder="e.g. 570001" pattern="[0-9]{6}" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="custAddress">Complete Address</label>
+              <textarea id="custAddress" rows="2" placeholder="House/Flat No., Street, Landmark, City, State" required></textarea>
+            </div>
+
+            <div class="form-section-title" style="margin-top: 20px;">2. Select Payment Option</div>
+            <div class="payment-options">
+              <!-- Option 1: Cash on Delivery -->
+              <label class="payment-option selected" id="optCod" onclick="selectPaymentMode('COD')">
+                <input type="radio" name="payMode" value="COD" checked>
+                <div class="payment-option-title">
+                  <span>Cash on Delivery</span>
+                  <span class="radio-dot"></span>
+                </div>
+                <div class="payment-option-sub">Pay in cash when your parcel arrives at your doorstep.</div>
+              </label>
+
+              <!-- Option 2: Pay & Buy (Online) -->
+              <label class="payment-option" id="optOnline" onclick="selectPaymentMode('ONLINE')">
+                <input type="radio" name="payMode" value="ONLINE">
+                <div class="payment-option-title">
+                  <span>Pay &amp; Buy</span>
+                  <span class="radio-dot"></span>
+                </div>
+                <div class="payment-option-sub">Instant online payment via UPI, QR, or Debit/Credit Card.</div>
+              </label>
+            </div>
+
+            <!-- Online Payment Interactive Sub-panel -->
+            <div class="online-pay-panel" id="onlinePayPanel">
+              <div class="form-section-title" style="margin-bottom:8px;">Choose Online Method</div>
+              <div class="upi-methods">
+                <button type="button" class="upi-chip active" onclick="selectOnlineSub('UPI ID', this)">UPI ID</button>
+                <button type="button" class="upi-chip" onclick="selectOnlineSub('Card', this)">Card</button>
+                <button type="button" class="upi-chip" onclick="selectOnlineSub('NetBanking', this)">NetBanking</button>
+              </div>
+              <div class="form-group" style="margin-bottom:0;" id="onlineInputWrapper">
+                <label for="upiInput" id="onlineInputLabel">Enter UPI ID (GPay / PhonePe / Paytm)</label>
+                <input type="text" id="upiInput" placeholder="yourname@okaxis">
+              </div>
+            </div>
+
+            <!-- Price Breakdown -->
+            <div class="bill-summary">
+              <div class="bill-row">
+                <span>Item Subtotal</span>
+                <span id="billSubtotal">₹0</span>
+              </div>
+              <div class="bill-row">
+                <span>Sacred Packaging &amp; Shipping</span>
+                <span id="billShipping">Free</span>
+              </div>
+              <div class="bill-row" id="codFeeRow">
+                <span>COD Handling</span>
+                <span>₹0</span>
+              </div>
+              <div class="bill-row total">
+                <span>Total Payable</span>
+                <span id="billTotal">₹0</span>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Confirmation Screen -->
+        <div class="confirmation-view" id="confirmationView">
+          <div class="check-circle">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <h3>Order Confirmed</h3>
+          <div class="order-id-tag" id="confirmedOrderId">ORDER #STV-1042</div>
+          <p id="confirmedSummaryText"></p>
+          <button type="button" class="btn-primary" onclick="closeCheckout()">Continue Browsing</button>
+        </div>
+      </div>
+
+      <div class="drawer-footer" id="drawerFooter">
+        <button type="submit" form="orderForm" class="submit-order-btn" id="submitOrderBtn">
+          Place COD Order &middot; ₹0
+        </button>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    // Product Catalog Data
+    const products = [
+      {
+        id: 1,
+        name: "Kumbakonam Brass Akhand Diya",
+        category: "Diyas & Lamps",
+        subtitle: "Solid Cast Brass · 6 Inch",
+        price: 1150,
+        tag: "Bestseller",
+        swatches: ["#B8860B", "#CD7F32"],
+        image: "https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        id: 2,
+        name: "Mysore Sandalwood Dhoop Cones",
+        category: "Incense & Dhoop",
+        subtitle: "Hand-Rolled · 40 Cones",
+        price: 380,
+        tag: "Pure",
+        swatches: ["#8C6239", "#4A3728"],
+        image: "https://images.unsplash.com/photo-1602928321679-560bb453f190?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        id: 3,
+        name: "Panchamukhi Rudraksha Japa Mala",
+        category: "Japa Malas",
+        subtitle: "108 Beads · Hand-Knotted",
+        price: 890,
+        tag: "Consecrated",
+        swatches: ["#5C3A21", "#8B4513"],
+        image: "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        id: 4,
+        name: "Hammered Copper Panchapatra Set",
+        category: "Puja Vessels",
+        subtitle: "Pure Tamba · Vessel & Spoon",
+        price: 740,
+        tag: "",
+        swatches: ["#B87333"],
+        image: "https://images.unsplash.com/photo-1584589167171-541ce45f1eea?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        id: 5,
+        name: "Ashtadhatu Dhyana Ganesha Murti",
+        category: "Idols & Murti",
+        subtitle: "Artisan Cast · 5.5 Inch",
+        price: 2450,
+        tag: "Heirloom",
+        swatches: ["#9C7A3C", "#4E3B2C"],
+        image: "https://images.unsplash.com/photo-1567591370504-80142b28f1c1?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        id: 6,
+        name: "Handloom Raw Silk Altar Asana",
+        category: "Altar Decor",
+        subtitle: "Zari Border · 18 x 18 Inch",
+        price: 520,
+        tag: "",
+        swatches: ["#C84B31", "#D4AF37", "#F5F2EB"],
+        image: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=600&q=80"
+      }
+    ];
+
+    let activeCategory = "All";
+    let selectedProduct = null;
+    let orderQty = 1;
+    let paymentMode = "COD";
+    let onlineSubMethod = "UPI ID";
+    let placedOrders = [];
+
+    // Render Products
+    function renderProducts(list) {
+      const grid = document.getElementById("productsGrid");
+      if (list.length === 0) {
+        grid.innerHTML = `<p style="grid-column: 1/-1; padding: 32px 0; color: var(--text-muted);">No offerings match your search. Try resetting filters.</p>`;
+        return;
+      }
+
+      grid.innerHTML = list.map(item => `
+        <article class="product-card">
+          <div class="product-media">
+            ${item.tag ? `<span class="product-tag">${item.tag}</span>` : ""}
+            <button class="wishlist-btn" onclick="this.classList.toggle('active')" aria-label="Save item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </button>
+            <img src="${item.image}" alt="${item.name}">
+          </div>
+          <h3 class="product-title">${item.name}</h3>
+          <div class="product-meta">${item.subtitle}</div>
+          <div class="product-price-row">
+            <span class="product-price">₹${item.price.toLocaleString('en-IN')}</span>
+            <div class="swatches">
+              ${item.swatches.map(color => `<span class="swatch" style="background:${color}"></span>`).join("")}
+            </div>
+          </div>
+          <button class="buy-now-btn" onclick="openCheckout(${item.id})">Buy Now</button>
+        </article>
+      `).join("");
+    }
+
+    function filterProducts() {
+      const query = document.getElementById("searchInput").value.toLowerCase().trim();
+      const filtered = products.filter(p => {
+        const matchesCat = activeCategory === "All" || p.category === activeCategory;
+        const matchesText = p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query) || p.subtitle.toLowerCase().includes(query);
+        return matchesCat && matchesText;
+      });
+      renderProducts(filtered);
+    }
+
+    function selectCategory(category, element) {
+      activeCategory = category;
+      document.getElementById("gridHeading").textContent = category === "All" ? "Sacred Offerings" : category;
+      document.querySelectorAll(".cat-item").forEach(el => el.classList.remove("active"));
+      if (element) {
+        element.classList.add("active");
+      }
+      filterProducts();
+      scrollToProducts();
+    }
+
+    function resetFilters() {
+      activeCategory = "All";
+      document.getElementById("searchInput").value = "";
+      document.getElementById("gridHeading").textContent = "Sacred Offerings";
+      document.querySelectorAll(".cat-item").forEach((el, idx) => {
+        el.classList.toggle("active", idx === 0);
+      });
+      renderProducts(products);
+    }
+
+    function scrollToProducts() {
+      document.getElementById("featuredSection").scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Checkout Logic
+    function openCheckout(productId) {
+      selectedProduct = products.find(p => p.id === productId);
+      if (!selectedProduct) return;
+
+      orderQty = 1;
+      paymentMode = "COD";
+
+      // Reset views
+      document.getElementById("checkoutFormView").style.display = "block";
+      document.getElementById("drawerFooter").style.display = "block";
+      document.getElementById("confirmationView").classList.remove("active");
+      document.getElementById("drawerTitle").textContent = "Complete Offering";
+
+      // Populate product info
+      document.getElementById("modalProductImg").src = selectedProduct.image;
+      document.getElementById("modalProductName").textContent = selectedProduct.name;
+      document.getElementById("modalProductMeta").textContent = selectedProduct.subtitle;
+      document.getElementById("modalUnitPrice").textContent = `₹${selectedProduct.price.toLocaleString('en-IN')}`;
+
+      selectPaymentMode("COD");
+      updateBilling();
+      document.getElementById("checkoutBackdrop").classList.add("open");
+    }
+
+    function closeCheckout() {
+      document.getElementById("checkoutBackdrop").classList.remove("open");
+    }
+
+    function closeDrawerOnOutside(e) {
+      if (e.target.id === "checkoutBackdrop") {
+        closeCheckout();
+      }
+    }
+
+    function changeQty(delta) {
+      orderQty = Math.max(1, Math.min(20, orderQty + delta));
+      updateBilling();
+    }
+
+    function selectPaymentMode(mode) {
+      paymentMode = mode;
+      const codEl = document.getElementById("optCod");
+      const onlineEl = document.getElementById("optOnline");
+      const onlinePanel = document.getElementById("onlinePayPanel");
+      const upiInput = document.getElementById("upiInput");
+
+      if (mode === "COD") {
+        codEl.classList.add("selected");
+        onlineEl.classList.remove("selected");
+        onlinePanel.classList.remove("visible");
+        upiInput.required = false;
+      } else {
+        onlineEl.classList.add("selected");
+        codEl.classList.remove("selected");
+        onlinePanel.classList.add("visible");
+        upiInput.required = true;
+      }
+      updateBilling();
+    }
+
+    function selectOnlineSub(method, btn) {
+      onlineSubMethod = method;
+      document.querySelectorAll(".upi-chip").forEach(c => c.classList.remove("active"));
+      btn.classList.add("active");
+
+      const label = document.getElementById("onlineInputLabel");
+      const input = document.getElementById("upiInput");
+      if (method === "UPI ID") {
+        label.textContent = "Enter UPI ID (GPay / PhonePe / Paytm)";
+        input.placeholder = "yourname@okaxis";
+      } else if (method === "Card") {
+        label.textContent = "Enter Card Number (Last 4 digits for demo)";
+        input.placeholder = "XXXX XXXX XXXX 4242";
+      } else {
+        label.textContent = "Enter Bank Name";
+        input.placeholder = "State Bank of India / HDFC";
+      }
+    }
+
+    function updateBilling() {
+      if (!selectedProduct) return;
+      document.getElementById("modalQty").textContent = orderQty;
+
+      const subtotal = selectedProduct.price * orderQty;
+      const shipping = subtotal >= 999 ? 0 : 60;
+      const total = subtotal + shipping;
+
+      document.getElementById("billSubtotal").textContent = `₹${subtotal.toLocaleString('en-IN')}`;
+      document.getElementById("billShipping").textContent = shipping === 0 ? "Free" : `₹${shipping}`;
+      document.getElementById("billTotal").textContent = `₹${total.toLocaleString('en-IN')}`;
+
+      const btn = document.getElementById("submitOrderBtn");
+      if (paymentMode === "COD") {
+        btn.textContent = `Place COD Order · ₹${total.toLocaleString('en-IN')}`;
+      } else {
+        btn.textContent = `Pay ₹${total.toLocaleString('en-IN')} & Buy Now`;
+      }
+    }
+
+    function handleOrderSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById("custName").value.trim();
+      const phone = document.getElementById("custPhone").value.trim();
+      const address = document.getElementById("custAddress").value.trim();
+      const pin = document.getElementById("custPin").value.trim();
+
+      const subtotal = selectedProduct.price * orderQty;
+      const shipping = subtotal >= 999 ? 0 : 60;
+      const total = subtotal + shipping;
+      const orderNum = "STV-" + Math.floor(1000 + Math.random() * 9000);
+
+      placedOrders.push({
+        orderNum,
+        product: selectedProduct.name,
+        qty: orderQty,
+        total,
+        paymentMode,
+        name
+      });
+
+      document.getElementById("orderCountBadge").textContent = placedOrders.length;
+
+      // Switch to confirmation state
+      document.getElementById("checkoutFormView").style.display = "none";
+      document.getElementById("drawerFooter").style.display = "none";
+      document.getElementById("drawerTitle").textContent = "Receipt";
+      document.getElementById("confirmedOrderId").textContent = `ORDER #${orderNum}`;
+
+      const modeDescription = paymentMode === "COD"
+        ? `Cash on Delivery of <strong>₹${total.toLocaleString('en-IN')}</strong> will be collected upon delivery.`
+        : `Online payment of <strong>₹${total.toLocaleString('en-IN')}</strong> via <strong>${onlineSubMethod}</strong> has been recorded.`;
+
+      document.getElementById("confirmedSummaryText").innerHTML = `
+        Thank you, <strong>${name}</strong>. Your order for <strong>${orderQty} &times; ${selectedProduct.name}</strong> is confirmed.<br><br>
+        ${modeDescription}<br><br>
+        Dispatching to: ${address} - ${pin} (${phone}).
+      `;
+
+      document.getElementById("confirmationView").classList.add("active");
+    }
+
+    function showRecentOrder() {
+      if (placedOrders.length === 0) {
+        alert("No orders placed yet. Click 'Buy Now' on any sacred offering to begin.");
+        return;
+      }
+      const last = placedOrders[placedOrders.length - 1];
+      alert(`Latest Order: #${last.orderNum}\nItem: ${last.qty}x ${last.product}\nTotal: ₹${last.total}\nMode: ${last.paymentMode}`);
+    }
+
+    // Initial render
+    renderProducts(products);
+  </script>
+</body>
+</html>
