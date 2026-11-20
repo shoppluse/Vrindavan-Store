@@ -64,19 +64,6 @@
   </header>
 
   <main class="container">
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="hero-content">
-        <span class="hero-eyebrow">Sacred Tradition</span>
-        <h1 class="hero-title">Timeless Devotion</h1>
-        <p class="hero-subtitle">Handcrafted chanting bags, Tulsi beads, traditional dhoti kurtas, Gopi dresses, and sacred literature for daily sadhana.</p>
-        <button class="btn-primary" onclick="scrollToProducts()">Explore the Collection</button>
-      </div>
-      <div class="hero-visual">
-        <img src="https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=900&q=80" alt="Traditional Devotional Offerings">
-      </div>
-    </section>
-
     <!-- Circular Category Bar (images/catimage2.png to images/catimage11.png) -->
     <section class="category-strip" id="categoryStrip">
       <div class="cat-item" onclick="selectCategory('Chanting Bag', this)">
@@ -269,8 +256,8 @@
           <p>Receive reminders for Ekadashi, Purnima, and seasonal artisan craft releases.</p>
         </div>
       </div>
-      <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed to Sattva Panchang updates.'); this.reset();">
-        <input type="email" placeholder="Enter your email address" required>
+      <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+        <input type="email" id="newsletterEmail" placeholder="Enter your email address" required>
         <button type="submit" class="btn-primary">Subscribe</button>
       </form>
     </section>
@@ -296,19 +283,19 @@
         <div class="footer-col">
           <h4>Lineage</h4>
           <ul>
-            <li><a href="#">Artisan Clusters</a></li>
-            <li><a href="#">Purity Standards</a></li>
-            <li><a href="#">Temple Supplies</a></li>
-            <li><a href="#">Contact Us</a></li>
+            <li><a href="javascript:void(0)" onclick="openInfoModal('artisans')">Artisan Clusters</a></li>
+            <li><a href="javascript:void(0)" onclick="openInfoModal('purity')">Purity Standards</a></li>
+            <li><a href="javascript:void(0)" onclick="openInfoModal('temple')">Temple Supplies</a></li>
+            <li><a href="javascript:void(0)" onclick="openInfoModal('contact')">Contact Us</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h4>Customer Seva</h4>
           <ul>
-            <li><a href="#">Shipping &amp; Delivery</a></li>
-            <li><a href="#">Track Order</a></li>
-            <li><a href="#">Replacement Policy</a></li>
-            <li><a href="#">Care Instructions</a></li>
+            <li><a href="javascript:void(0)" onclick="openInfoModal('shipping')">Shipping &amp; Delivery</a></li>
+            <li><a href="javascript:void(0)" onclick="openInfoModal('track')">Track Order</a></li>
+            <li><a href="javascript:void(0)" onclick="openInfoModal('replacement')">Replacement Policy</a></li>
+            <li><a href="javascript:void(0)" onclick="openInfoModal('care')">Care Instructions</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -324,10 +311,28 @@
       </div>
       <div class="footer-bottom">
         <span>&copy; 2026 SATTVA DEVOTIONAL STORE. All Rights Reserved.</span>
-        <span>Privacy Policy &nbsp;&middot;&nbsp; Terms of Seva</span>
+        <span>
+          <a href="javascript:void(0)" onclick="openInfoModal('privacy')">Privacy Policy</a>
+          &nbsp;&middot;&nbsp;
+          <a href="javascript:void(0)" onclick="openInfoModal('terms')">Terms of Seva</a>
+        </span>
       </div>
     </div>
   </footer>
+
+  <!-- Store Policy & Seva Info Modal -->
+  <div class="drawer-backdrop" id="infoModalBackdrop" onclick="if(event.target.id==='infoModalBackdrop') closeInfoModal()">
+    <aside class="checkout-drawer" style="max-width: 420px;">
+      <div class="drawer-header">
+        <h2 id="infoModalTitle">Store Information</h2>
+        <button class="close-btn" onclick="closeInfoModal()" aria-label="Close">&times;</button>
+      </div>
+      <div class="drawer-body" id="infoModalBody" style="line-height: 1.7; color: var(--text-secondary);"></div>
+      <div class="drawer-footer">
+        <button type="button" class="submit-order-btn" onclick="closeInfoModal()">Close</button>
+      </div>
+    </aside>
+  </div>
 
   <!-- Buy Now / Checkout Drawer -->
   <div class="drawer-backdrop" id="checkoutBackdrop" onclick="closeDrawerOnOutside(event)">
