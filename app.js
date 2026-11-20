@@ -383,21 +383,52 @@ function showRecentOrder() {
   alert(`Latest Order: #${last.orderNum}\nItem: ${last.qty}x ${last.product}\nTotal: ₹${last.total}\nMode: ${last.paymentMode}`);
 }
 
-// Newsletter Subscription
-function handleNewsletterSubmit(e) {
+// Newsletter Subscription -> Logs Email or Mobile Number to Google Sheets ("Subscribers" tab)
+async function handleNewsletterSubmit(e) {
   e.preventDefault();
-  const emailInput = document.getElementById("newsletterEmail");
-  const email = emailInput.value.trim();
-  if (!email) return;
+  const input = document.getElementById("newsletterContact");
+  const submitBtn = e.target.querySelector("button[type='submit']");
+  const contact = input.value.trim();
+  if (!contact) return;
+
+  const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact);
+  const isPhone = /^[6-9]\d{9}$/.test(contact.replace(/[\s+-]/g, "").slice(-10));
+
+  if (!isEmail && !isPhone) {
+    alert("Please enter a valid email address or 10-digit mobile number.");
+    return;
+  }
+
+  const originalBtnText = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Subscribing...";
+
+  if (STORE_CONFIG.googleSheetUrl) {
+    try {
+      await fetch(STORE_CONFIG.googleSheetUrl, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({
+          type: "subscriber",
+          contact: contact
+        })
+      });
+    } catch (err) {
+      console.error("Subscriber logging failed:", err);
+    }
+  }
 
   const subscribers = JSON.parse(localStorage.getItem("sattva_subscribers") || "[]");
-  if (!subscribers.includes(email)) {
-    subscribers.push(email);
+  if (!subscribers.includes(contact)) {
+    subscribers.push(contact);
     localStorage.setItem("sattva_subscribers", JSON.stringify(subscribers));
   }
 
-  alert(`Thank you! ${email} is now subscribed to SATTVA Panchang & New Arrival alerts.`);
+  alert(`Hare Krishna! ${contact} is now subscribed to SATTVA Panchang & New Arrival alerts.`);
   e.target.reset();
+  submitBtn.disabled = false;
+  submitBtn.textContent = originalBtnText;
 }
 
 // Store Policy & Seva Info Drawer
