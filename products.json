@@ -8,5 +8,15 @@
     "tag": "New",
     "swatches": ["#8C6239", "#231F20"],
     "image": "https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=600&q=80"
+  },
+    {
+    "id": 2,
+    "name": "Chanting Bag",
+    "category": "Japa Malas",
+    "subtitle": "Material · Dimensions",
+    "price": 299,
+    "tag": "New",
+    "swatches": ["#8C6239", "#231F20"],
+    "image": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSyZdI0qCnUQDU0hZnHAMXiIhCxYNhBGg8miRh9F8kRVzSxEe7nx1gwtdp8pv8gPu6VjDwHC8Rv_Ack74xczu8r4gGQh8nYfKehcOAlRNo"
   }
 ]
