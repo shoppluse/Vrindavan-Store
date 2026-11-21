@@ -1,6 +1,6 @@
 // ==========================================
 // 1. CONFIGURE YOUR RECEIVERS HERE
-// ==========================================
+// ========================================== 
 const STORE_CONFIG = {
   googleSheetUrl: "https://script.google.com/macros/s/AKfycbyvWqPvoGLYWQgAhlkJVqxIeU9qGn2tGst-aDsumzuHzRa-9pM5Gzke3Dw3IKFBobA/exec",
   whatsappNumber: "919945243930",
