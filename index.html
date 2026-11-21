@@ -63,7 +63,7 @@
     </div>
   </header>
 
-  <!-- Product Detail View (Opens when clicking any product card) -->
+  <!-- Product Detail View (Opens when clicking any product card or Latest Arrival banner) -->
   <section class="pdp-section container" id="productDetailView" style="display: none;">
     <button type="button" class="pdp-back-btn" onclick="closeProductDetail()">
       &larr; Back to Offerings
@@ -165,6 +165,13 @@
         <span class="cat-label">Books</span>
       </div>
     </section>
+
+    <!-- Latest Arrivals Auto-Slider (1 in a row, cycles every 2s) -->
+    <div class="section-header" id="latestArrivalsHeader">
+      <h2 class="section-title">Latest Arrivals</h2>
+      <div class="latest-dots" id="latestDots"></div>
+    </div>
+    <section class="latest-slider" id="latestSlider"></section>
 
     <!-- Featured Picks / Storefront -->
     <div class="section-header" id="featuredSection">
