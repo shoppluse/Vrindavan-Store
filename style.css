@@ -319,8 +319,8 @@ header {
 .latest-slider {
   position: relative;
   width: 100%;
-  height: 300px;
-  background: var(--bg-subtle);
+  height: 320px;
+  background: var(--bg-surface);
   border: 1px solid var(--border);
   overflow: hidden;
   cursor: pointer;
@@ -330,7 +330,7 @@ header {
   position: absolute;
   inset: 0;
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
+  grid-template-columns: 1fr 1.1fr;
   background: var(--bg-surface);
   opacity: 0;
   pointer-events: none;
@@ -344,15 +344,20 @@ header {
 
 .latest-slide-media {
   position: relative;
+  width: 100%;
   height: 100%;
+  padding: 14px;
   background: var(--bg-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
 
 .latest-slide-media img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .latest-slide-content {
