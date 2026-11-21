@@ -41,8 +41,7 @@ async function loadProducts() {
     products = Array.isArray(data) ? data : [];
     showAllBtn.textContent = `Show All (${products.length})`;
     renderProducts(products);
-
-    // Check if URL has #product=ID on initial load
+    initLatestArrivalsSlider(products);
     handleUrlHashProduct();
   } catch (error) {
     grid.innerHTML = `<p class="grid-status-msg">Unable to load products.json. Make sure you are running on a local server or GitHub Pages.</p>`;
@@ -92,6 +91,86 @@ function renderProducts(list) {
 }
 
 // ==========================================
+// LATEST ARRIVALS 1-IN-A-ROW SLIDER (2s INTERVAL)
+// ==========================================
+let latestSliderTimer = null;
+let latestSlideIndex = 0;
+
+function initLatestArrivalsSlider(allProducts) {
+  const headerEl = document.getElementById("latestArrivalsHeader");
+  const sliderEl = document.getElementById("latestSlider");
+  const dotsEl = document.getElementById("latestDots");
+  if (!sliderEl || !dotsEl || !headerEl) return;
+
+  if (!Array.isArray(allProducts) || allProducts.length === 0) {
+    headerEl.style.display = "none";
+    sliderEl.style.display = "none";
+    return;
+  }
+
+  headerEl.style.display = "flex";
+  sliderEl.style.display = "block";
+
+  const latestFour = allProducts.slice(-4).reverse();
+  latestSlideIndex = 0;
+
+  sliderEl.innerHTML = latestFour
+    .map((item, idx) => {
+      const priceFormatted = Number(item.price || 0).toLocaleString("en-IN");
+      const descText = item.description || item.subtitle || "Sacred devotional offering from SATTVA.";
+      return `
+        <div class="latest-slide ${idx === 0 ? "active" : ""}" onclick="openProductDetail(${item.id})">
+          <div class="latest-slide-media">
+            <img src="${item.image}" alt="${item.name}">
+          </div>
+          <div class="latest-slide-content">
+            <span class="latest-badge">New Arrival &middot; ${item.category}</span>
+            <h3>${item.name}</h3>
+            <p>${descText}</p>
+            <div class="latest-slide-footer">
+              <span class="latest-slide-price">₹${priceFormatted}</span>
+              <span class="section-link">View Details &rarr;</span>
+            </div>
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+
+  dotsEl.innerHTML = latestFour
+    .map(
+      (_, idx) =>
+        `<button type="button" class="latest-dot ${idx === 0 ? "active" : ""}" aria-label="Slide ${idx + 1}" onclick="event.stopPropagation(); goToLatestSlide(${idx}, ${latestFour.length})"></button>`
+    )
+    .join("");
+
+  if (latestSliderTimer) clearInterval(latestSliderTimer);
+
+  if (latestFour.length > 1) {
+    const startTimer = () => {
+      if (latestSliderTimer) clearInterval(latestSliderTimer);
+      latestSliderTimer = setInterval(() => {
+        goToLatestSlide((latestSlideIndex + 1) % latestFour.length, latestFour.length);
+      }, 2000);
+    };
+
+    startTimer();
+    sliderEl.onmouseenter = () => clearInterval(latestSliderTimer);
+    sliderEl.onmouseleave = () => startTimer();
+  }
+}
+
+function goToLatestSlide(index, total) {
+  const slides = document.querySelectorAll("#latestSlider .latest-slide");
+  const dots = document.querySelectorAll("#latestDots .latest-dot");
+  if (!slides.length) return;
+
+  latestSlideIndex = index % total;
+  slides.forEach((s, i) => s.classList.toggle("active", i === latestSlideIndex));
+  dots.forEach((d, i) => d.classList.toggle("active", i === latestSlideIndex));
+}
+
+// ==========================================
 // PRODUCT DETAIL PAGE (PDP) LOGIC
 // ==========================================
 function openProductDetail(productId) {
@@ -125,7 +204,6 @@ function openProductDetail(productId) {
     item.description ||
     `Authentic ${item.name} from SATTVA (${item.category}). Crafted with reverence for daily sadhana and temple offerings.`;
 
-  // Render Swatches if present
   const swatchBlock = document.getElementById("pdpSwatchesBlock");
   const swatchContainer = document.getElementById("pdpSwatches");
   if (Array.isArray(item.swatches) && item.swatches.length > 0) {
@@ -137,7 +215,6 @@ function openProductDetail(productId) {
     swatchBlock.style.display = "none";
   }
 
-  // Render Sizes if Dhoti Kurtas, Gopi Dress, or custom sizes exist
   const sizeBlock = document.getElementById("pdpSizeBlock");
   const sizeChips = document.getElementById("pdpSizeChips");
   if (sizes.length > 0) {
@@ -341,7 +418,6 @@ function openCheckout(productId, initialQty = 1, initialSize = "") {
   document.getElementById("displayUpiId").textContent = STORE_CONFIG.upiId;
   document.getElementById("utrInput").value = "";
 
-  // Show size chips inside checkout if product has sizes
   const checkoutSizeBlock = document.getElementById("checkoutSizeBlock");
   const checkoutSizeChips = document.getElementById("checkoutSizeChips");
   if (sizes.length > 0) {
