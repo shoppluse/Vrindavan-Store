@@ -24,7 +24,7 @@
   <!-- Header -->
   <header>
     <div class="header-top">
-      <button class="menu-trigger" onclick="scrollToProducts()">
+      <button class="menu-trigger" onclick="closeProductDetail(); scrollToProducts();">
         <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-width="1.5">
           <line x1="0" y1="1" x2="18" y2="1"/>
           <line x1="0" y1="7" x2="18" y2="7"/>
@@ -33,7 +33,7 @@
         <span>Catalog</span>
       </button>
 
-      <a href="#" class="brand-logo" onclick="resetFilters()">SATTVA</a>
+      <a href="#" class="brand-logo" onclick="closeProductDetail(); resetFilters();">SATTVA</a>
 
       <div class="header-actions">
         <button class="icon-btn" title="Saved Items" onclick="alert('Wishlist items are saved locally in your browser.')">
@@ -54,7 +54,7 @@
 
     <div class="search-wrapper">
       <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Search for chanting bags, beads, dhoti kurtas, gopi dress, kanti mala, books..." oninput="filterProducts()">
+        <input type="text" id="searchInput" placeholder="Search for chanting bags, beads, dhoti kurtas, gopi dress, kanti mala, books..." oninput="closeProductDetail(); filterProducts();">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#78716C" stroke-width="1.8">
           <circle cx="11" cy="11" r="8"/>
           <line x1="21" y1="21" x2="16.65" y2="16.65"/>
@@ -63,76 +63,105 @@
     </div>
   </header>
 
-  <main class="container">
-    <!-- Circular Category Bar (images/catimage2.png to images/catimage11.png) -->
+  <!-- Product Detail View (Opens when clicking any product card) -->
+  <section class="pdp-section container" id="productDetailView" style="display: none;">
+    <button type="button" class="pdp-back-btn" onclick="closeProductDetail()">
+      &larr; Back to Offerings
+    </button>
+
+    <div class="pdp-layout">
+      <div class="pdp-image-box">
+        <span class="product-tag" id="pdpTag" style="display:none;">New</span>
+        <img id="pdpImage" src="" alt="Product Image">
+      </div>
+
+      <div class="pdp-info-box">
+        <div class="pdp-category" id="pdpCategory">Category</div>
+        <h1 class="pdp-title" id="pdpTitle">Product Title</h1>
+        <div class="pdp-price" id="pdpPrice">₹0</div>
+        <div class="pdp-subtitle" id="pdpSubtitle">Material · Dimensions</div>
+
+        <p class="pdp-description" id="pdpDescription"></p>
+
+        <!-- Swatches Display -->
+        <div class="pdp-option-block" id="pdpSwatchesBlock" style="display:none;">
+          <label class="pdp-label">Available Shades</label>
+          <div class="pdp-swatches" id="pdpSwatches"></div>
+        </div>
+
+        <!-- Clothing Size Selector (Shown for Dhoti Kurtas, Gopi Dress, or items with sizes) -->
+        <div class="pdp-option-block" id="pdpSizeBlock" style="display:none;">
+          <label class="pdp-label">Select Size: <strong id="pdpSelectedSizeLabel">M</strong></label>
+          <div class="size-chips" id="pdpSizeChips"></div>
+        </div>
+
+        <!-- Quantity Selector -->
+        <div class="pdp-option-block">
+          <label class="pdp-label">Quantity</label>
+          <div class="qty-control">
+            <button type="button" onclick="changePdpQty(-1)">&minus;</button>
+            <span id="pdpQty">1</span>
+            <button type="button" onclick="changePdpQty(1)">+</button>
+          </div>
+        </div>
+
+        <div class="pdp-actions">
+          <button type="button" class="btn-primary pdp-buy-btn" id="pdpBuyNowBtn">
+            Buy Now &middot; ₹0
+          </button>
+        </div>
+
+        <div class="pdp-highlights">
+          <div>&bull; Insured Pan-India Dispatch within 24–48 hours</div>
+          <div>&bull; Free Sacred Packaging on orders above ₹999</div>
+          <div>&bull; Direct UPI &amp; QR Payment</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Storefront View -->
+  <main class="container" id="storefrontMain">
+    <!-- Circular Category Bar -->
     <section class="category-strip" id="categoryStrip">
       <div class="cat-item" onclick="selectCategory('Chanting Bag', this)">
-        <div class="cat-circle">
-          <img src="images/catimage2.png" alt="Chanting Bag">
-        </div>
+        <div class="cat-circle"><img src="images/catimage2.png" alt="Chanting Bag"></div>
         <span class="cat-label">Chanting Bag</span>
       </div>
-
       <div class="cat-item" onclick="selectCategory('Beads', this)">
-        <div class="cat-circle">
-          <img src="images/catimage3.png" alt="Beads">
-        </div>
+        <div class="cat-circle"><img src="images/catimage3.png" alt="Beads"></div>
         <span class="cat-label">Beads</span>
       </div>
-
       <div class="cat-item" onclick="selectCategory('Worship Materials', this)">
-        <div class="cat-circle">
-          <img src="images/catimage4.png" alt="Worship Materials">
-        </div>
+        <div class="cat-circle"><img src="images/catimage4.png" alt="Worship Materials"></div>
         <span class="cat-label">Worship Materials</span>
       </div>
-
       <div class="cat-item" onclick="selectCategory('Dhoti Kurtas', this)">
-        <div class="cat-circle">
-          <img src="images/catimage5.png" alt="Dhoti Kurtas">
-        </div>
+        <div class="cat-circle"><img src="images/catimage5.png" alt="Dhoti Kurtas"></div>
         <span class="cat-label">Dhoti Kurtas</span>
       </div>
-
       <div class="cat-item" onclick="selectCategory('Gopi Dress', this)">
-        <div class="cat-circle">
-          <img src="images/catimage6.png" alt="Gopi Dress">
-        </div>
+        <div class="cat-circle"><img src="images/catimage6.png" alt="Gopi Dress"></div>
         <span class="cat-label">Gopi Dress</span>
       </div>
-
       <div class="cat-item" onclick="selectCategory('Perfumes', this)">
-        <div class="cat-circle">
-          <img src="images/catimage7.png" alt="Perfumes">
-        </div>
+        <div class="cat-circle"><img src="images/catimage7.png" alt="Perfumes"></div>
         <span class="cat-label">Perfumes</span>
       </div>
-
       <div class="cat-item" onclick="selectCategory('Kanti Mala', this)">
-        <div class="cat-circle">
-          <img src="images/catimage8.png" alt="Kanti Mala">
-        </div>
+        <div class="cat-circle"><img src="images/catimage8.png" alt="Kanti Mala"></div>
         <span class="cat-label">Kanti Mala</span>
       </div>
-
       <div class="cat-item" onclick="selectCategory('Lockets', this)">
-        <div class="cat-circle">
-          <img src="images/catimage9.png" alt="Lockets">
-        </div>
+        <div class="cat-circle"><img src="images/catimage9.png" alt="Lockets"></div>
         <span class="cat-label">Lockets</span>
       </div>
-
       <div class="cat-item" onclick="selectCategory('Photos', this)">
-        <div class="cat-circle">
-          <img src="images/catimage10.png" alt="Photos">
-        </div>
+        <div class="cat-circle"><img src="images/catimage10.png" alt="Photos"></div>
         <span class="cat-label">Photos</span>
       </div>
-
       <div class="cat-item" onclick="selectCategory('Books', this)">
-        <div class="cat-circle">
-          <img src="images/catimage11.png" alt="Books">
-        </div>
+        <div class="cat-circle"><img src="images/catimage11.png" alt="Books"></div>
         <span class="cat-label">Books</span>
       </div>
     </section>
@@ -173,7 +202,7 @@
       </div>
     </section>
 
-    <!-- Featured Picks / Storefront (Loaded from products.json) -->
+    <!-- Featured Picks / Storefront -->
     <div class="section-header" id="featuredSection">
       <h2 class="section-title" id="gridHeading">Sacred Offerings</h2>
       <button class="section-link" id="showAllBtn" onclick="resetFilters()">Show All (0)</button>
@@ -274,10 +303,10 @@
         <div class="footer-col">
           <h4>Offerings</h4>
           <ul>
-            <li><a href="#featuredSection" onclick="selectCategory('Chanting Bag')">Chanting Bags</a></li>
-            <li><a href="#featuredSection" onclick="selectCategory('Beads')">Japa Beads &amp; Kanti Mala</a></li>
-            <li><a href="#featuredSection" onclick="selectCategory('Dhoti Kurtas')">Dhoti Kurtas &amp; Gopi Dress</a></li>
-            <li><a href="#featuredSection" onclick="selectCategory('Books')">Sacred Books</a></li>
+            <li><a href="#featuredSection" onclick="closeProductDetail(); selectCategory('Chanting Bag')">Chanting Bags</a></li>
+            <li><a href="#featuredSection" onclick="closeProductDetail(); selectCategory('Beads')">Japa Beads &amp; Kanti Mala</a></li>
+            <li><a href="#featuredSection" onclick="closeProductDetail(); selectCategory('Dhoti Kurtas')">Dhoti Kurtas &amp; Gopi Dress</a></li>
+            <li><a href="#featuredSection" onclick="closeProductDetail(); selectCategory('Books')">Sacred Books</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -334,7 +363,7 @@
     </aside>
   </div>
 
-  <!-- Buy Now / Checkout Drawer (Direct UPI Only - No COD) -->
+  <!-- Buy Now / Checkout Drawer -->
   <div class="drawer-backdrop" id="checkoutBackdrop" onclick="closeDrawerOnOutside(event)">
     <aside class="checkout-drawer">
       <div class="drawer-header">
@@ -358,6 +387,12 @@
                 <strong id="modalUnitPrice">₹0</strong>
               </div>
             </div>
+          </div>
+
+          <!-- Size selector inside checkout drawer when applicable -->
+          <div id="checkoutSizeBlock" style="display:none; margin-bottom: 16px;">
+            <label style="display:block; font-size:12px; font-weight:600; margin-bottom:6px;">Select Size</label>
+            <div class="size-chips" id="checkoutSizeChips"></div>
           </div>
 
           <form id="orderForm" onsubmit="handleOrderSubmit(event)">
@@ -401,11 +436,12 @@
             <div class="form-section-title" style="margin-top: 20px;">2. Pay Online via UPI</div>
             <div style="background: var(--bg-subtle); border: 1px solid var(--border); padding: 14px; text-align: center; margin-bottom: 14px;">
               <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px;">
-                Scan QR with any UPI app or tap <strong>Pay via UPI App</strong> below
+                Scan QR with any UPI app, copy UPI ID, or tap <strong>Pay via UPI App</strong>
               </p>
               <img id="upiQrImg" src="" alt="UPI Payment QR" style="width: 160px; height: 160px; margin: 0 auto 10px; border: 1px solid var(--border); background: #fff; padding: 6px;">
-              <div style="font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 10px;">
-                UPI ID: <span id="displayUpiId">9945243930-2@ibl</span>
+              <div style="display:flex; align-items:center; justify-content:center; gap:8px; font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 10px;">
+                <span>UPI ID: <span id="displayUpiId">9945243930-2@ibl</span></span>
+                <button type="button" onclick="copyUpiId()" id="copyUpiBtn" style="border:1px solid var(--border); background:#fff; padding:4px 8px; font-size:11px; font-weight:600; cursor:pointer;">Copy</button>
               </div>
               <a id="upiPayLink" href="#" class="btn-primary" style="display: block; text-align: center; text-decoration: none; padding: 11px;">
                 Pay ₹0 via UPI App
