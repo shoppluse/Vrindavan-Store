@@ -151,7 +151,7 @@ function initLatestArrivalsSlider(allProducts) {
       if (latestSliderTimer) clearInterval(latestSliderTimer);
       latestSliderTimer = setInterval(() => {
         goToLatestSlide((latestSlideIndex + 1) % latestFour.length, latestFour.length);
-      }, 2000);
+      }, 3000);
     };
 
     startTimer();
