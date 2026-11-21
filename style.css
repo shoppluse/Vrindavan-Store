@@ -1211,12 +1211,16 @@ footer {
   }
 
   .latest-slider {
-    height: 360px;
+    height: 390px;
   }
 
   .latest-slide {
     grid-template-columns: 1fr;
-    grid-template-rows: 190px 1fr;
+    grid-template-rows: 230px 1fr;
+  }
+
+  .latest-slide-media {
+    padding: 12px;
   }
 
   .latest-slide-content {
