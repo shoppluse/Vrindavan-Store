@@ -345,7 +345,16 @@ function showRecentOrder() {
   alert(`Latest Order: #${last.orderNum}\nItem: ${last.qty}x ${last.product}\nPaid: ₹${last.total}\n${last.paymentDetail}`);
 }
 
-// Newsletter Subscription -> Logs Email or Mobile Number to Google Sheets ("Subscribers" tab)
+// Normalize email or 10-digit mobile number for accurate duplicate detection
+function normalizeSubscriber(raw) {
+  const cleaned = raw.trim().toLowerCase();
+  if (cleaned.includes("@")) {
+    return cleaned;
+  }
+  return cleaned.replace(/[\s+-]/g, "").slice(-10);
+}
+
+// Newsletter Subscription -> Prevents duplicate entries and logs to Google Sheets ("Subscribers" tab)
 async function handleNewsletterSubmit(e) {
   e.preventDefault();
   const input = document.getElementById("newsletterContact");
@@ -354,16 +363,29 @@ async function handleNewsletterSubmit(e) {
   if (!contact) return;
 
   const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact);
-  const isPhone = /^[6-9]\d{9}$/.test(contact.replace(/[\s+-]/g, "").slice(-10));
+  const digitsOnly = contact.replace(/[\s+-]/g, "").slice(-10);
+  const isPhone = /^[6-9]\d{9}$/.test(digitsOnly);
 
   if (!isEmail && !isPhone) {
     alert("Please enter a valid email address or 10-digit mobile number.");
     return;
   }
 
+  const normalizedValue = normalizeSubscriber(contact);
+  const subscribers = JSON.parse(localStorage.getItem("sattva_subscribers") || "[]");
+  const alreadyExists = subscribers.some(item => normalizeSubscriber(item) === normalizedValue);
+
+  if (alreadyExists) {
+    alert("Already subscribed");
+    e.target.reset();
+    return;
+  }
+
   const originalBtnText = submitBtn.textContent;
   submitBtn.disabled = true;
   submitBtn.textContent = "Subscribing...";
+
+  const finalContactToSave = isEmail ? contact.toLowerCase() : digitsOnly;
 
   if (STORE_CONFIG.googleSheetUrl) {
     try {
@@ -373,7 +395,7 @@ async function handleNewsletterSubmit(e) {
         headers: { "Content-Type": "text/plain" },
         body: JSON.stringify({
           type: "subscriber",
-          contact: contact
+          contact: finalContactToSave
         })
       });
     } catch (err) {
@@ -381,13 +403,10 @@ async function handleNewsletterSubmit(e) {
     }
   }
 
-  const subscribers = JSON.parse(localStorage.getItem("sattva_subscribers") || "[]");
-  if (!subscribers.includes(contact)) {
-    subscribers.push(contact);
-    localStorage.setItem("sattva_subscribers", JSON.stringify(subscribers));
-  }
+  subscribers.push(finalContactToSave);
+  localStorage.setItem("sattva_subscribers", JSON.stringify(subscribers));
 
-  alert(`Hare Krishna! ${contact} is now subscribed to SATTVA Panchang & New Arrival alerts.`);
+  alert(`Hare Krishna! ${finalContactToSave} is now subscribed to SATTVA Panchang & New Arrival alerts.`);
   e.target.reset();
   submitBtn.disabled = false;
   submitBtn.textContent = originalBtnText;
