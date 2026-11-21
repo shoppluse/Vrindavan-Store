@@ -1,19 +1,10 @@
 [
   {
     "id": 1,
-    "name": "Sample Offering Title",
-    "category": "Worship Materials",
-    "subtitle": "Material · Dimensions",
-    "price": 999,
-    "tag": "New",
-    "swatches": ["#8C6239", "#231F20"],
-    "image": "https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=600&q=80"
-  },
-  {
-    "id": 2,
     "name": "Chanting Bag",
     "category": "Chanting Bag",
     "subtitle": "Pure Handloom Cotton · With Counter Beads",
+    "description": "Breathable handloom cotton japa gomukhi bag stitched with a dedicated index-finger opening and inner bead loop.",
     "price": 299,
     "tag": "New",
     "swatches": ["#8C6239", "#231F20"],
