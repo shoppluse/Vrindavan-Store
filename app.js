@@ -14,6 +14,8 @@ let selectedProduct = null;
 let orderQty = 1;
 let selectedSize = "";
 let placedOrders = [];
+let pdpImages = [];
+let pdpImageIndex = 0;
 
 // Helper: Determine available sizes for clothing categories or explicit product sizes
 function getProductSizes(product) {
@@ -91,7 +93,7 @@ function renderProducts(list) {
 }
 
 // ==========================================
-// LATEST ARRIVALS 1-IN-A-ROW SLIDER (2s INTERVAL)
+// LATEST ARRIVALS 1-IN-A-ROW SLIDER (3s INTERVAL)
 // ==========================================
 let latestSliderTimer = null;
 let latestSlideIndex = 0;
@@ -171,8 +173,60 @@ function goToLatestSlide(index, total) {
 }
 
 // ==========================================
-// PRODUCT DETAIL PAGE (PDP) LOGIC
+// PRODUCT DETAIL PAGE (PDP) & MULTI-IMAGE GALLERY
 // ==========================================
+function setupPdpGallery(product) {
+  pdpImages = Array.isArray(product.images) && product.images.length > 0
+    ? product.images
+    : [product.image];
+  pdpImageIndex = 0;
+  renderPdpImage();
+}
+
+function renderPdpImage() {
+  const imgEl = document.getElementById("pdpImage");
+  const prevBtn = document.getElementById("pdpPrevImgBtn");
+  const nextBtn = document.getElementById("pdpNextImgBtn");
+  const counterEl = document.getElementById("pdpImgCounter");
+  const thumbsEl = document.getElementById("pdpThumbs");
+
+  imgEl.src = pdpImages[pdpImageIndex];
+  imgEl.alt = selectedProduct ? selectedProduct.name : "Product Image";
+
+  const hasMultiple = pdpImages.length > 1;
+  prevBtn.style.display = hasMultiple ? "flex" : "none";
+  nextBtn.style.display = hasMultiple ? "flex" : "none";
+  counterEl.style.display = hasMultiple ? "inline-block" : "none";
+  thumbsEl.style.display = hasMultiple ? "flex" : "none";
+
+  if (hasMultiple) {
+    counterEl.textContent = `${pdpImageIndex + 1} / ${pdpImages.length}`;
+    thumbsEl.innerHTML = pdpImages
+      .map(
+        (src, idx) => `
+          <button type="button" class="pdp-thumb ${idx === pdpImageIndex ? "active" : ""}" onclick="selectPdpImage(${idx})" aria-label="View image ${idx + 1}">
+            <img src="${src}" alt="Thumbnail ${idx + 1}">
+          </button>
+        `
+      )
+      .join("");
+  } else {
+    thumbsEl.innerHTML = "";
+  }
+}
+
+function stepPdpImage(delta) {
+  if (pdpImages.length <= 1) return;
+  pdpImageIndex = (pdpImageIndex + delta + pdpImages.length) % pdpImages.length;
+  renderPdpImage();
+}
+
+function selectPdpImage(idx) {
+  if (idx < 0 || idx >= pdpImages.length) return;
+  pdpImageIndex = idx;
+  renderPdpImage();
+}
+
 function openProductDetail(productId) {
   const item = products.find(p => p.id === productId);
   if (!item) return;
@@ -194,8 +248,8 @@ function openProductDetail(productId) {
     tagEl.style.display = "none";
   }
 
-  document.getElementById("pdpImage").src = item.image;
-  document.getElementById("pdpImage").alt = item.name;
+  setupPdpGallery(item);
+
   document.getElementById("pdpCategory").textContent = item.category || "Sacred Offering";
   document.getElementById("pdpTitle").textContent = item.name;
   document.getElementById("pdpPrice").textContent = `₹${Number(item.price || 0).toLocaleString("en-IN")}`;
