@@ -4,7 +4,7 @@
 const STORE_CONFIG = {
   googleSheetUrl: "https://script.google.com/macros/s/AKfycbyvWqPvoGLYWQgAhlkJVqxIeU9qGn2tGst-aDsumzuHzRa-9pM5Gzke3Dw3IKFBobA/exec",
   whatsappNumber: "919945243930",
-  upiId: "paytmqr6jq3t0@ptys",
+  upiId: "9945243930-2@ibl",
   merchantName: "SATTVA Devotional Store"
 };
 
@@ -12,7 +12,20 @@ let products = [];
 let activeCategory = "All";
 let selectedProduct = null;
 let orderQty = 1;
+let selectedSize = "";
 let placedOrders = [];
+
+// Helper: Determine available sizes for clothing categories or explicit product sizes
+function getProductSizes(product) {
+  if (!product) return [];
+  if (Array.isArray(product.sizes) && product.sizes.length > 0) {
+    return product.sizes;
+  }
+  if (product.category === "Dhoti Kurtas" || product.category === "Gopi Dress") {
+    return ["S", "M", "L", "XL", "XXL"];
+  }
+  return [];
+}
 
 // Load products dynamically from products.json
 async function loadProducts() {
@@ -28,6 +41,9 @@ async function loadProducts() {
     products = Array.isArray(data) ? data : [];
     showAllBtn.textContent = `Show All (${products.length})`;
     renderProducts(products);
+
+    // Check if URL has #product=ID on initial load
+    handleUrlHashProduct();
   } catch (error) {
     grid.innerHTML = `<p class="grid-status-msg">Unable to load products.json. Make sure you are running on a local server or GitHub Pages.</p>`;
   }
@@ -54,27 +70,143 @@ function renderProducts(list) {
 
     return `
       <article class="product-card">
-        <div class="product-media">
+        <div class="product-media product-card-clickable" onclick="openProductDetail(${item.id})">
           ${item.tag ? `<span class="product-tag">${item.tag}</span>` : ""}
-          <button class="wishlist-btn" onclick="this.classList.toggle('active')" aria-label="Save item">
+          <button class="wishlist-btn" onclick="event.stopPropagation(); this.classList.toggle('active')" aria-label="Save item">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
             </svg>
           </button>
           <img src="${item.image}" alt="${item.name}">
         </div>
-        <h3 class="product-title">${item.name}</h3>
+        <h3 class="product-title product-card-clickable" onclick="openProductDetail(${item.id})">${item.name}</h3>
         <div class="product-meta">${item.subtitle || ""}</div>
         <div class="product-price-row">
           <span class="product-price">₹${priceFormatted}</span>
           <div class="swatches">${swatchesHtml}</div>
         </div>
-        <button class="buy-now-btn" onclick="openCheckout(${item.id})">Buy Now</button>
+        <button class="buy-now-btn" onclick="openProductDetail(${item.id})">View Details</button>
       </article>
     `;
   }).join("");
 }
 
+// ==========================================
+// PRODUCT DETAIL PAGE (PDP) LOGIC
+// ==========================================
+function openProductDetail(productId) {
+  const item = products.find(p => p.id === productId);
+  if (!item) return;
+
+  selectedProduct = item;
+  orderQty = 1;
+
+  const sizes = getProductSizes(item);
+  selectedSize = sizes.length > 0 ? (sizes.includes("M") ? "M" : sizes[0]) : "";
+
+  document.getElementById("storefrontMain").style.display = "none";
+  document.getElementById("productDetailView").style.display = "block";
+
+  const tagEl = document.getElementById("pdpTag");
+  if (item.tag) {
+    tagEl.textContent = item.tag;
+    tagEl.style.display = "inline-block";
+  } else {
+    tagEl.style.display = "none";
+  }
+
+  document.getElementById("pdpImage").src = item.image;
+  document.getElementById("pdpImage").alt = item.name;
+  document.getElementById("pdpCategory").textContent = item.category || "Sacred Offering";
+  document.getElementById("pdpTitle").textContent = item.name;
+  document.getElementById("pdpPrice").textContent = `₹${Number(item.price || 0).toLocaleString("en-IN")}`;
+  document.getElementById("pdpSubtitle").textContent = item.subtitle || "Authentic Devotional Craft";
+  document.getElementById("pdpDescription").textContent =
+    item.description ||
+    `Authentic ${item.name} from SATTVA (${item.category}). Crafted with reverence for daily sadhana and temple offerings.`;
+
+  // Render Swatches if present
+  const swatchBlock = document.getElementById("pdpSwatchesBlock");
+  const swatchContainer = document.getElementById("pdpSwatches");
+  if (Array.isArray(item.swatches) && item.swatches.length > 0) {
+    swatchContainer.innerHTML = item.swatches
+      .map(color => `<span class="swatch" style="background:${color}"></span>`)
+      .join("");
+    swatchBlock.style.display = "block";
+  } else {
+    swatchBlock.style.display = "none";
+  }
+
+  // Render Sizes if Dhoti Kurtas, Gopi Dress, or custom sizes exist
+  const sizeBlock = document.getElementById("pdpSizeBlock");
+  const sizeChips = document.getElementById("pdpSizeChips");
+  if (sizes.length > 0) {
+    document.getElementById("pdpSelectedSizeLabel").textContent = selectedSize;
+    sizeChips.innerHTML = sizes
+      .map(sz => `<button type="button" class="size-chip ${sz === selectedSize ? "active" : ""}" onclick="selectProductSize('${sz}')">${sz}</button>`)
+      .join("");
+    sizeBlock.style.display = "block";
+  } else {
+    sizeBlock.style.display = "none";
+  }
+
+  updatePdpControls();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  history.replaceState(null, "", `#product=${item.id}`);
+}
+
+function selectProductSize(size) {
+  selectedSize = size;
+  document.getElementById("pdpSelectedSizeLabel").textContent = size;
+  document.querySelectorAll("#pdpSizeChips .size-chip").forEach(btn => {
+    btn.classList.toggle("active", btn.textContent === size);
+  });
+}
+
+function changePdpQty(delta) {
+  orderQty = Math.max(1, Math.min(20, orderQty + delta));
+  updatePdpControls();
+}
+
+function updatePdpControls() {
+  if (!selectedProduct) return;
+  document.getElementById("pdpQty").textContent = orderQty;
+  const total = Number(selectedProduct.price || 0) * orderQty;
+  const buyBtn = document.getElementById("pdpBuyNowBtn");
+  buyBtn.textContent = `Buy Now · ₹${total.toLocaleString("en-IN")}`;
+  buyBtn.onclick = () => openCheckout(selectedProduct.id, orderQty, selectedSize);
+}
+
+function closeProductDetail() {
+  const pdp = document.getElementById("productDetailView");
+  if (pdp && pdp.style.display !== "none") {
+    pdp.style.display = "none";
+    document.getElementById("storefrontMain").style.display = "block";
+    history.replaceState(null, "", window.location.pathname + window.location.search);
+  }
+}
+
+function handleUrlHashProduct() {
+  const match = window.location.hash.match(/^#product=(\d+)$/);
+  if (match) {
+    const id = Number(match[1]);
+    if (products.some(p => p.id === id)) {
+      openProductDetail(id);
+    }
+  }
+}
+
+window.addEventListener("hashchange", () => {
+  if (!window.location.hash.startsWith("#product=")) {
+    closeProductDetail();
+  } else {
+    handleUrlHashProduct();
+  }
+});
+
+// ==========================================
+// FILTER & CATEGORY CAROUSEL
+// ==========================================
 function filterProducts() {
   const query = document.getElementById("searchInput").value.toLowerCase().trim();
   const filtered = products.filter(p => {
@@ -111,7 +243,6 @@ function scrollToProducts() {
   document.getElementById("featuredSection").scrollIntoView({ behavior: "smooth" });
 }
 
-// Smooth Infinite Auto-Glide + Manual Left/Right Swipe for Category Strip
 function initCategoryCarousel() {
   const strip = document.getElementById("categoryStrip");
   if (!strip) return;
@@ -187,12 +318,16 @@ function initCategoryCarousel() {
   requestAnimationFrame(step);
 }
 
-// Checkout Drawer Logic (Prepaid UPI Only - No COD)
-function openCheckout(productId) {
+// ==========================================
+// CHECKOUT DRAWER LOGIC (Prepaid UPI Only)
+// ==========================================
+function openCheckout(productId, initialQty = 1, initialSize = "") {
   selectedProduct = products.find(p => p.id === productId);
   if (!selectedProduct) return;
 
-  orderQty = 1;
+  orderQty = initialQty;
+  const sizes = getProductSizes(selectedProduct);
+  selectedSize = sizes.length > 0 ? (initialSize || (sizes.includes("M") ? "M" : sizes[0])) : "";
 
   document.getElementById("checkoutFormView").style.display = "block";
   document.getElementById("drawerFooter").style.display = "block";
@@ -206,8 +341,28 @@ function openCheckout(productId) {
   document.getElementById("displayUpiId").textContent = STORE_CONFIG.upiId;
   document.getElementById("utrInput").value = "";
 
+  // Show size chips inside checkout if product has sizes
+  const checkoutSizeBlock = document.getElementById("checkoutSizeBlock");
+  const checkoutSizeChips = document.getElementById("checkoutSizeChips");
+  if (sizes.length > 0) {
+    checkoutSizeChips.innerHTML = sizes
+      .map(sz => `<button type="button" class="size-chip ${sz === selectedSize ? "active" : ""}" onclick="selectCheckoutSize('${sz}')">${sz}</button>`)
+      .join("");
+    checkoutSizeBlock.style.display = "block";
+  } else {
+    checkoutSizeBlock.style.display = "none";
+  }
+
   updateBilling();
   document.getElementById("checkoutBackdrop").classList.add("open");
+}
+
+function selectCheckoutSize(size) {
+  selectedSize = size;
+  document.querySelectorAll("#checkoutSizeChips .size-chip").forEach(btn => {
+    btn.classList.toggle("active", btn.textContent === size);
+  });
+  updateBilling();
 }
 
 function closeCheckout() {
@@ -225,6 +380,14 @@ function changeQty(delta) {
   updateBilling();
 }
 
+function copyUpiId() {
+  navigator.clipboard.writeText(STORE_CONFIG.upiId).then(() => {
+    const btn = document.getElementById("copyUpiBtn");
+    btn.textContent = "Copied!";
+    setTimeout(() => (btn.textContent = "Copy"), 2000);
+  });
+}
+
 function updateBilling() {
   if (!selectedProduct) return;
   document.getElementById("modalQty").textContent = orderQty;
@@ -237,8 +400,8 @@ function updateBilling() {
   document.getElementById("billShipping").textContent = shipping === 0 ? "Free" : `₹${shipping}`;
   document.getElementById("billTotal").textContent = `₹${total.toLocaleString("en-IN")}`;
 
-  // Generate dynamic UPI deep link & QR code for exact amount
-  const note = encodeURIComponent(`SATTVA - ${selectedProduct.name} x${orderQty}`);
+  const sizeSuffix = selectedSize ? ` (${selectedSize})` : "";
+  const note = encodeURIComponent(`SATTVA - ${selectedProduct.name}${sizeSuffix} x${orderQty}`);
   const pa = encodeURIComponent(STORE_CONFIG.upiId);
   const pn = encodeURIComponent(STORE_CONFIG.merchantName);
   const upiUri = `upi://pay?pa=${pa}&pn=${pn}&am=${total}&cu=INR&tn=${note}`;
@@ -267,6 +430,7 @@ async function handleOrderSubmit(e) {
   const shipping = subtotal >= 999 ? 0 : 60;
   const total = subtotal + shipping;
   const orderNum = "STV-" + Math.floor(1000 + Math.random() * 9000);
+  const productLabel = selectedSize ? `${selectedProduct.name} (Size: ${selectedSize})` : selectedProduct.name;
   const paymentDetail = `UPI Paid (UTR: ${utrVal})`;
 
   const orderPayload = {
@@ -275,14 +439,13 @@ async function handleOrderSubmit(e) {
     phone,
     address,
     pin,
-    product: selectedProduct.name,
+    product: productLabel,
     qty: orderQty,
     total,
     paymentMode: "UPI PREPAID",
     paymentDetail
   };
 
-  // 1. Send order + UTR to Google Sheets
   if (STORE_CONFIG.googleSheetUrl) {
     try {
       await fetch(STORE_CONFIG.googleSheetUrl, {
@@ -299,10 +462,9 @@ async function handleOrderSubmit(e) {
   placedOrders.push(orderPayload);
   document.getElementById("orderCountBadge").textContent = placedOrders.length;
 
-  // 2. Build WhatsApp message URL with UTR ID
   const waText = [
     `*NEW PREPAID ORDER: #${orderNum}*`,
-    `Item: ${orderQty} x ${selectedProduct.name}`,
+    `Item: ${orderQty} x ${productLabel}`,
     `Amount Paid: Rs. ${total.toLocaleString("en-IN")}`,
     `UPI Ref / UTR: ${utrVal}`,
     `---`,
@@ -313,14 +475,13 @@ async function handleOrderSubmit(e) {
 
   const waLink = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent(waText)}`;
 
-  // 3. Show Receipt inside Drawer + WhatsApp Confirm Button
   document.getElementById("checkoutFormView").style.display = "none";
   document.getElementById("drawerFooter").style.display = "none";
   document.getElementById("drawerTitle").textContent = "Receipt";
   document.getElementById("confirmedOrderId").textContent = `ORDER #${orderNum}`;
 
   document.getElementById("confirmedSummaryText").innerHTML = `
-    Thank you, <strong>${name}</strong>. Your order for <strong>${orderQty} &times; ${selectedProduct.name}</strong> has been logged.<br><br>
+    Thank you, <strong>${name}</strong>. Your order for <strong>${orderQty} &times; ${productLabel}</strong> has been logged.<br><br>
     Payment of <strong>₹${total.toLocaleString("en-IN")}</strong> recorded with UPI Ref/UTR: <strong>${utrVal}</strong>.<br><br>
     Dispatching to: ${address} - ${pin} (${phone}).<br><br>
     <a href="${waLink}" target="_blank" rel="noopener" class="btn-primary" style="display:block; text-align:center; margin-top:12px;">
@@ -338,14 +499,16 @@ async function handleOrderSubmit(e) {
 
 function showRecentOrder() {
   if (placedOrders.length === 0) {
-    alert("No orders placed yet. Click 'Buy Now' on any offering to begin.");
+    alert("No orders placed yet. Click on any offering to view details and order.");
     return;
   }
   const last = placedOrders[placedOrders.length - 1];
   alert(`Latest Order: #${last.orderNum}\nItem: ${last.qty}x ${last.product}\nPaid: ₹${last.total}\n${last.paymentDetail}`);
 }
 
-// Normalize email or 10-digit mobile number for accurate duplicate detection
+// ==========================================
+// NEWSLETTER SUBSCRIPTION (WITH DUPLICATE CHECK)
+// ==========================================
 function normalizeSubscriber(raw) {
   const cleaned = raw.trim().toLowerCase();
   if (cleaned.includes("@")) {
@@ -354,7 +517,6 @@ function normalizeSubscriber(raw) {
   return cleaned.replace(/[\s+-]/g, "").slice(-10);
 }
 
-// Newsletter Subscription -> Prevents duplicate entries and logs to Google Sheets ("Subscribers" tab)
 async function handleNewsletterSubmit(e) {
   e.preventDefault();
   const input = document.getElementById("newsletterContact");
