@@ -227,8 +227,8 @@
           </svg>
         </div>
         <div class="trust-text">
-          <h4>COD &amp; Instant UPI</h4>
-          <p>Pay online or cash at your doorstep</p>
+          <h4>Instant UPI &amp; QR</h4>
+          <p>Pay directly via GPay, PhonePe, Paytm or BHIM</p>
         </div>
       </div>
       <div class="trust-item">
@@ -301,11 +301,11 @@
         <div class="footer-col">
           <h4>Accepted Modes</h4>
           <div class="payment-badges">
-            <span class="pay-pill">COD</span>
             <span class="pay-pill">UPI</span>
-            <span class="pay-pill">RUPAY</span>
-            <span class="pay-pill">VISA</span>
-            <span class="pay-pill">MASTERCARD</span>
+            <span class="pay-pill">GPAY</span>
+            <span class="pay-pill">PHONEPE</span>
+            <span class="pay-pill">PAYTM</span>
+            <span class="pay-pill">BHIM</span>
           </div>
         </div>
       </div>
@@ -334,7 +334,7 @@
     </aside>
   </div>
 
-  <!-- Buy Now / Checkout Drawer -->
+  <!-- Buy Now / Checkout Drawer (Direct UPI Only - No COD) -->
   <div class="drawer-backdrop" id="checkoutBackdrop" onclick="closeDrawerOnOutside(event)">
     <aside class="checkout-drawer">
       <div class="drawer-header">
@@ -383,41 +383,7 @@
               <textarea id="custAddress" rows="2" placeholder="House/Flat No., Street, Landmark, City, State" required></textarea>
             </div>
 
-            <div class="form-section-title" style="margin-top: 20px;">2. Select Payment Option</div>
-            <div class="payment-options">
-              <label class="payment-option selected" id="optCod" onclick="selectPaymentMode('COD')">
-                <input type="radio" name="payMode" value="COD" checked>
-                <div class="payment-option-title">
-                  <span>Cash on Delivery</span>
-                  <span class="radio-dot"></span>
-                </div>
-                <div class="payment-option-sub">Pay in cash when your parcel arrives at your doorstep.</div>
-              </label>
-
-              <label class="payment-option" id="optOnline" onclick="selectPaymentMode('ONLINE')">
-                <input type="radio" name="payMode" value="ONLINE">
-                <div class="payment-option-title">
-                  <span>Pay &amp; Buy</span>
-                  <span class="radio-dot"></span>
-                </div>
-                <div class="payment-option-sub">Instant online payment via UPI, QR, or Debit/Credit Card.</div>
-              </label>
-            </div>
-
-            <div class="online-pay-panel" id="onlinePayPanel">
-              <div class="form-section-title" style="margin-bottom:8px;">Choose Online Method</div>
-              <div class="upi-methods">
-                <button type="button" class="upi-chip active" onclick="selectOnlineSub('UPI ID', this)">UPI ID</button>
-                <button type="button" class="upi-chip" onclick="selectOnlineSub('Card', this)">Card</button>
-                <button type="button" class="upi-chip" onclick="selectOnlineSub('NetBanking', this)">NetBanking</button>
-              </div>
-              <div class="form-group" style="margin-bottom:0;" id="onlineInputWrapper">
-                <label for="upiInput" id="onlineInputLabel">Enter UPI ID (GPay / PhonePe / Paytm)</label>
-                <input type="text" id="upiInput" placeholder="yourname@okaxis">
-              </div>
-            </div>
-
-            <div class="bill-summary">
+            <div class="bill-summary" style="margin-top: 16px;">
               <div class="bill-row">
                 <span>Item Subtotal</span>
                 <span id="billSubtotal">₹0</span>
@@ -426,14 +392,29 @@
                 <span>Sacred Packaging &amp; Shipping</span>
                 <span id="billShipping">Free</span>
               </div>
-              <div class="bill-row" id="codFeeRow">
-                <span>COD Handling</span>
-                <span>₹0</span>
-              </div>
               <div class="bill-row total">
                 <span>Total Payable</span>
                 <span id="billTotal">₹0</span>
               </div>
+            </div>
+
+            <div class="form-section-title" style="margin-top: 20px;">2. Pay Online via UPI</div>
+            <div style="background: var(--bg-subtle); border: 1px solid var(--border); padding: 14px; text-align: center; margin-bottom: 14px;">
+              <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px;">
+                Scan QR with any UPI app or tap <strong>Pay via UPI App</strong> below
+              </p>
+              <img id="upiQrImg" src="" alt="UPI Payment QR" style="width: 160px; height: 160px; margin: 0 auto 10px; border: 1px solid var(--border); background: #fff; padding: 6px;">
+              <div style="font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 10px;">
+                UPI ID: <span id="displayUpiId">9945243930-2@ibl</span>
+              </div>
+              <a id="upiPayLink" href="#" class="btn-primary" style="display: block; text-align: center; text-decoration: none; padding: 11px;">
+                Pay ₹0 via UPI App
+              </a>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+              <label for="utrInput">3. Enter 12-Digit UPI Transaction / UTR ID</label>
+              <input type="text" id="utrInput" placeholder="e.g. 432518904321" minlength="6" required>
             </div>
           </form>
         </div>
@@ -444,7 +425,7 @@
               <polyline points="20 6 9 17 4 12"/>
             </svg>
           </div>
-          <h3>Order Confirmed</h3>
+          <h3>Payment Submitted</h3>
           <div class="order-id-tag" id="confirmedOrderId">ORDER #STV-1042</div>
           <p id="confirmedSummaryText"></p>
           <button type="button" class="btn-primary" onclick="closeCheckout()">Continue Browsing</button>
@@ -453,7 +434,7 @@
 
       <div class="drawer-footer" id="drawerFooter">
         <button type="submit" form="orderForm" class="submit-order-btn" id="submitOrderBtn">
-          Place COD Order &middot; ₹0
+          Confirm Payment &amp; Place Order &middot; ₹0
         </button>
       </div>
     </aside>
