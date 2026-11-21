@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
 
@@ -70,9 +70,15 @@
     </button>
 
     <div class="pdp-layout">
-      <div class="pdp-image-box">
-        <span class="product-tag" id="pdpTag" style="display:none;">New</span>
-        <img id="pdpImage" src="" alt="Product Image">
+      <div class="pdp-gallery">
+        <div class="pdp-image-box">
+          <span class="product-tag" id="pdpTag" style="display:none;">New</span>
+          <button type="button" class="pdp-nav-btn prev" id="pdpPrevImgBtn" onclick="stepPdpImage(-1)" aria-label="Previous image" style="display:none;">&lsaquo;</button>
+          <img id="pdpImage" src="" alt="Product Image">
+          <button type="button" class="pdp-nav-btn next" id="pdpNextImgBtn" onclick="stepPdpImage(1)" aria-label="Next image" style="display:none;">&rsaquo;</button>
+          <span class="pdp-img-counter" id="pdpImgCounter" style="display:none;">1 / 1</span>
+        </div>
+        <div class="pdp-thumbs" id="pdpThumbs" style="display:none;"></div>
       </div>
 
       <div class="pdp-info-box">
@@ -166,7 +172,7 @@
       </div>
     </section>
 
-    <!-- Latest Arrivals Auto-Slider (1 in a row, cycles every 2s) -->
+    <!-- Latest Arrivals Auto-Slider (1 in a row, cycles every 3s) -->
     <div class="section-header" id="latestArrivalsHeader">
       <h2 class="section-title">Latest Arrivals</h2>
       <div class="latest-dots" id="latestDots"></div>
@@ -447,6 +453,6 @@
     </aside>
   </div>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=6"></script>
 </body>
 </html>
