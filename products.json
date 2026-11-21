@@ -7,7 +7,16 @@
     "description": "Breathable handloom cotton japa gomukhi bag stitched with a dedicated index-finger opening and inner bead loop.",
     "price": 299,
     "tag": "New",
-    "swatches": ["#8C6239", "#231F20"],
     "image": "images/catimage2.png"
+  },
+    {
+    "id": 2,
+    "name": "Kanti Mala ",
+    "category": "Kanti Mala",
+    "subtitle": "Pure Tulsi 2 Round",
+    "description": "Designed Kantimala with full Finishing",
+    "price": 199,
+    "tag": "only few left",
+    "image": "images/kanti2.1.png"
   }
 ]
