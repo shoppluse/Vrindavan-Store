@@ -3,15 +3,15 @@
 // ==========================================
 const STORE_CONFIG = {
   googleSheetUrl: "https://script.google.com/macros/s/AKfycbyvWqPvoGLYWQgAhlkJVqxIeU9qGn2tGst-aDsumzuHzRa-9pM5Gzke3Dw3IKFBobA/exec",
-  whatsappNumber: "919945243930"
+  whatsappNumber: "919945243930",
+  upiId: "9945243930-2@ibl",
+  merchantName: "SATTVA Devotional Store"
 };
 
 let products = [];
 let activeCategory = "All";
 let selectedProduct = null;
 let orderQty = 1;
-let paymentMode = "COD";
-let onlineSubMethod = "UPI ID";
 let placedOrders = [];
 
 // Load products dynamically from products.json
@@ -116,7 +116,6 @@ function initCategoryCarousel() {
   const strip = document.getElementById("categoryStrip");
   if (!strip) return;
 
-  // Duplicate items once for seamless infinite loop
   const originalItems = Array.from(strip.children);
   originalItems.forEach(item => {
     const clone = item.cloneNode(true);
@@ -128,7 +127,7 @@ function initCategoryCarousel() {
   let startX = 0;
   let scrollLeftStart = 0;
   let hasDragged = false;
-  const speed = 0.45; // Gentle slow motion speed
+  const speed = 0.45;
 
   strip.addEventListener("mouseenter", () => (isPaused = true));
   strip.addEventListener("mouseleave", () => {
@@ -188,13 +187,12 @@ function initCategoryCarousel() {
   requestAnimationFrame(step);
 }
 
-// Checkout Drawer Logic
+// Checkout Drawer Logic (Prepaid UPI Only - No COD)
 function openCheckout(productId) {
   selectedProduct = products.find(p => p.id === productId);
   if (!selectedProduct) return;
 
   orderQty = 1;
-  paymentMode = "COD";
 
   document.getElementById("checkoutFormView").style.display = "block";
   document.getElementById("drawerFooter").style.display = "block";
@@ -205,8 +203,9 @@ function openCheckout(productId) {
   document.getElementById("modalProductName").textContent = selectedProduct.name;
   document.getElementById("modalProductMeta").textContent = selectedProduct.subtitle || selectedProduct.category;
   document.getElementById("modalUnitPrice").textContent = `₹${Number(selectedProduct.price).toLocaleString("en-IN")}`;
+  document.getElementById("displayUpiId").textContent = STORE_CONFIG.upiId;
+  document.getElementById("utrInput").value = "";
 
-  selectPaymentMode("COD");
   updateBilling();
   document.getElementById("checkoutBackdrop").classList.add("open");
 }
@@ -226,46 +225,6 @@ function changeQty(delta) {
   updateBilling();
 }
 
-function selectPaymentMode(mode) {
-  paymentMode = mode;
-  const codEl = document.getElementById("optCod");
-  const onlineEl = document.getElementById("optOnline");
-  const onlinePanel = document.getElementById("onlinePayPanel");
-  const upiInput = document.getElementById("upiInput");
-
-  if (mode === "COD") {
-    codEl.classList.add("selected");
-    onlineEl.classList.remove("selected");
-    onlinePanel.classList.remove("visible");
-    upiInput.required = false;
-  } else {
-    onlineEl.classList.add("selected");
-    codEl.classList.remove("selected");
-    onlinePanel.classList.add("visible");
-    upiInput.required = true;
-  }
-  updateBilling();
-}
-
-function selectOnlineSub(method, btn) {
-  onlineSubMethod = method;
-  document.querySelectorAll(".upi-chip").forEach(c => c.classList.remove("active"));
-  btn.classList.add("active");
-
-  const label = document.getElementById("onlineInputLabel");
-  const input = document.getElementById("upiInput");
-  if (method === "UPI ID") {
-    label.textContent = "Enter UPI ID (GPay / PhonePe / Paytm)";
-    input.placeholder = "yourname@okaxis";
-  } else if (method === "Card") {
-    label.textContent = "Enter Card Number (Last 4 digits for demo)";
-    input.placeholder = "XXXX XXXX XXXX 4242";
-  } else {
-    label.textContent = "Enter Bank Name";
-    input.placeholder = "State Bank of India / HDFC";
-  }
-}
-
 function updateBilling() {
   if (!selectedProduct) return;
   document.getElementById("modalQty").textContent = orderQty;
@@ -278,10 +237,18 @@ function updateBilling() {
   document.getElementById("billShipping").textContent = shipping === 0 ? "Free" : `₹${shipping}`;
   document.getElementById("billTotal").textContent = `₹${total.toLocaleString("en-IN")}`;
 
+  // Generate dynamic UPI deep link & QR code for exact amount
+  const note = encodeURIComponent(`SATTVA - ${selectedProduct.name} x${orderQty}`);
+  const pa = encodeURIComponent(STORE_CONFIG.upiId);
+  const pn = encodeURIComponent(STORE_CONFIG.merchantName);
+  const upiUri = `upi://pay?pa=${pa}&pn=${pn}&am=${total}&cu=INR&tn=${note}`;
+
+  document.getElementById("upiPayLink").href = upiUri;
+  document.getElementById("upiPayLink").textContent = `Pay ₹${total.toLocaleString("en-IN")} via UPI App`;
+  document.getElementById("upiQrImg").src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUri)}`;
+
   const btn = document.getElementById("submitOrderBtn");
-  btn.textContent = paymentMode === "COD"
-    ? `Place COD Order · ₹${total.toLocaleString("en-IN")}`
-    : `Pay ₹${total.toLocaleString("en-IN")} & Buy Now`;
+  btn.textContent = `Confirm Payment & Place Order · ₹${total.toLocaleString("en-IN")}`;
 }
 
 async function handleOrderSubmit(e) {
@@ -294,13 +261,13 @@ async function handleOrderSubmit(e) {
   const phone = document.getElementById("custPhone").value.trim();
   const address = document.getElementById("custAddress").value.trim();
   const pin = document.getElementById("custPin").value.trim();
-  const upiVal = document.getElementById("upiInput").value.trim();
+  const utrVal = document.getElementById("utrInput").value.trim();
 
   const subtotal = Number(selectedProduct.price) * orderQty;
   const shipping = subtotal >= 999 ? 0 : 60;
   const total = subtotal + shipping;
   const orderNum = "STV-" + Math.floor(1000 + Math.random() * 9000);
-  const paymentDetail = paymentMode === "COD" ? "Cash on Delivery" : `${onlineSubMethod}: ${upiVal}`;
+  const paymentDetail = `UPI Paid (UTR: ${utrVal})`;
 
   const orderPayload = {
     orderNum,
@@ -311,11 +278,11 @@ async function handleOrderSubmit(e) {
     product: selectedProduct.name,
     qty: orderQty,
     total,
-    paymentMode,
+    paymentMode: "UPI PREPAID",
     paymentDetail
   };
 
-  // 1. Send order to Google Sheets
+  // 1. Send order + UTR to Google Sheets
   if (STORE_CONFIG.googleSheetUrl) {
     try {
       await fetch(STORE_CONFIG.googleSheetUrl, {
@@ -332,12 +299,12 @@ async function handleOrderSubmit(e) {
   placedOrders.push(orderPayload);
   document.getElementById("orderCountBadge").textContent = placedOrders.length;
 
-  // 2. Build WhatsApp message URL
+  // 2. Build WhatsApp message URL with UTR ID
   const waText = [
-    `*NEW ORDER: #${orderNum}*`,
+    `*NEW PREPAID ORDER: #${orderNum}*`,
     `Item: ${orderQty} x ${selectedProduct.name}`,
-    `Total: Rs. ${total.toLocaleString("en-IN")}`,
-    `Payment: ${paymentDetail}`,
+    `Amount Paid: Rs. ${total.toLocaleString("en-IN")}`,
+    `UPI Ref / UTR: ${utrVal}`,
     `---`,
     `Name: ${name}`,
     `Phone: ${phone}`,
@@ -352,23 +319,18 @@ async function handleOrderSubmit(e) {
   document.getElementById("drawerTitle").textContent = "Receipt";
   document.getElementById("confirmedOrderId").textContent = `ORDER #${orderNum}`;
 
-  const modeDescription = paymentMode === "COD"
-    ? `Cash on Delivery of <strong>₹${total.toLocaleString("en-IN")}</strong> will be collected upon delivery.`
-    : `Online payment of <strong>₹${total.toLocaleString("en-IN")}</strong> via <strong>${onlineSubMethod}</strong> has been recorded.`;
-
   document.getElementById("confirmedSummaryText").innerHTML = `
     Thank you, <strong>${name}</strong>. Your order for <strong>${orderQty} &times; ${selectedProduct.name}</strong> has been logged.<br><br>
-    ${modeDescription}<br><br>
+    Payment of <strong>₹${total.toLocaleString("en-IN")}</strong> recorded with UPI Ref/UTR: <strong>${utrVal}</strong>.<br><br>
     Dispatching to: ${address} - ${pin} (${phone}).<br><br>
     <a href="${waLink}" target="_blank" rel="noopener" class="btn-primary" style="display:block; text-align:center; margin-top:12px;">
-      Send Confirmation on WhatsApp
+      Send Payment Receipt on WhatsApp
     </a>
   `;
 
   document.getElementById("confirmationView").classList.add("active");
   submitBtn.disabled = false;
 
-  // Automatically open WhatsApp in a new tab
   if (STORE_CONFIG.whatsappNumber) {
     window.open(waLink, "_blank", "noopener");
   }
@@ -380,7 +342,7 @@ function showRecentOrder() {
     return;
   }
   const last = placedOrders[placedOrders.length - 1];
-  alert(`Latest Order: #${last.orderNum}\nItem: ${last.qty}x ${last.product}\nTotal: ₹${last.total}\nMode: ${last.paymentMode}`);
+  alert(`Latest Order: #${last.orderNum}\nItem: ${last.qty}x ${last.product}\nPaid: ₹${last.total}\n${last.paymentDetail}`);
 }
 
 // Newsletter Subscription -> Logs Email or Mobile Number to Google Sheets ("Subscribers" tab)
@@ -471,7 +433,7 @@ const INFO_PAGES = {
   },
   terms: {
     title: "Terms of Seva",
-    body: "<p>All product prices are listed in Indian Rupees (INR). Cash on Delivery and UPI orders are confirmed via WhatsApp prior to dispatch.</p>"
+    body: "<p>All product prices are listed in Indian Rupees (INR). Prepaid UPI orders are verified against the UTR reference ID prior to dispatch.</p>"
   }
 };
 
