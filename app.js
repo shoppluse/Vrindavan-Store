@@ -110,13 +110,21 @@ function initLatestArrivalsSlider(allProducts) {
     return;
   }
 
+  // Pick only the latest product for each category (newest item added in products.json wins)
+  const latestByCategoryMap = new Map();
+  allProducts.forEach(item => {
+    const catKey = (item.category || "General").trim();
+    latestByCategoryMap.set(catKey, item);
+  });
+
+  // Reverse so the most recently added category appears first
+  const latestPerCategory = Array.from(latestByCategoryMap.values()).reverse();
+
   headerEl.style.display = "flex";
   sliderEl.style.display = "block";
-
-  const latestFour = allProducts.slice(-4).reverse();
   latestSlideIndex = 0;
 
-  sliderEl.innerHTML = latestFour
+  sliderEl.innerHTML = latestPerCategory
     .map((item, idx) => {
       const priceFormatted = Number(item.price || 0).toLocaleString("en-IN");
       const descText = item.description || item.subtitle || "Sacred devotional offering from SATTVA.";
@@ -126,7 +134,7 @@ function initLatestArrivalsSlider(allProducts) {
             <img src="${item.image}" alt="${item.name}">
           </div>
           <div class="latest-slide-content">
-            <span class="latest-badge">New Arrival &middot; ${item.category}</span>
+            <span class="latest-badge">Latest in ${item.category}</span>
             <h3>${item.name}</h3>
             <p>${descText}</p>
             <div class="latest-slide-footer">
@@ -139,20 +147,20 @@ function initLatestArrivalsSlider(allProducts) {
     })
     .join("");
 
-  dotsEl.innerHTML = latestFour
+  dotsEl.innerHTML = latestPerCategory
     .map(
       (_, idx) =>
-        `<button type="button" class="latest-dot ${idx === 0 ? "active" : ""}" aria-label="Slide ${idx + 1}" onclick="event.stopPropagation(); goToLatestSlide(${idx}, ${latestFour.length})"></button>`
+        `<button type="button" class="latest-dot ${idx === 0 ? "active" : ""}" aria-label="Slide ${idx + 1}" onclick="event.stopPropagation(); goToLatestSlide(${idx}, ${latestPerCategory.length})"></button>`
     )
     .join("");
 
   if (latestSliderTimer) clearInterval(latestSliderTimer);
 
-  if (latestFour.length > 1) {
+  if (latestPerCategory.length > 1) {
     const startTimer = () => {
       if (latestSliderTimer) clearInterval(latestSliderTimer);
       latestSliderTimer = setInterval(() => {
-        goToLatestSlide((latestSlideIndex + 1) % latestFour.length, latestFour.length);
+        goToLatestSlide((latestSlideIndex + 1) % latestPerCategory.length, latestPerCategory.length);
       }, 3000);
     };
 
