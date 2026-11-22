@@ -26,5 +26,18 @@
       "images/kanti2.1.png",
       "images/kanti2.1.png"
     ]
+  },
+    {
+    "id": 3,
+    "name": "Prabhupada Chanting Bag",
+    "category": "Chanting Bag",
+    "subtitle": "Digitally Printed Bead-Bag",
+    "description": "Prabhupada picture with lots of Hare Krishna mantra in the background. Stunning colorful standard size bead bag with digital printing on all 3 sides and Hare Krishna Mantra printed on the strap. First class quality cotton japa bead bag.",
+    "price": 299,
+    "tag": "New",
+    "image": "images/CB1P.png",
+    "images": [
+      "images/CB1P.png"
+    ]
   }
 ]
