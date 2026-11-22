@@ -39,5 +39,31 @@
     "images": [
       "images/CB1P.png"
     ]
+  },
+      {
+    "id": 4,
+    "name": "Gomukhi Japa Mala Bag",
+    "category": "Chanting Bag",
+    "subtitle": "Digitally Printed Bead-Bag",
+    "description": "The cotton Cow Calf Printed bead bag for chanting is a beautifully crafted accessory for spiritual practitioners. This gomukhi japa mala bag is designed to keep your japa mala safe and secure during mantra meditation.",
+    "price": 199,
+    "tag": "New",
+    "image": "images/CB1F.png",
+    "images": [
+      "images/CB1F.png"
+    ]
+  },
+        {
+    "id": 5,
+    "name": "Gomukhi Japa Mala Bag",
+    "category": "Chanting Bag",
+    "subtitle": "Digitally Printed Bead-Bag",
+    "description": "Superior Quality Cotton: Constructed with supple, breathable, and long-lasting cotton fabric for enduring wear.",
+    "price": 249,
+    "tag": "New",
+    "image": "images/CB1peacock.png",
+    "images": [
+      "images/CB1peacock.png"
+    ]
   }
 ]
