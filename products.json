@@ -78,5 +78,33 @@
     "images": [
       "images/kantimala3RwN.png"
     ]
+  },
+  {
+    "id": 7,
+    "name": "Big Narasimha Kavach",
+    "category": "Lockets",
+    "subtitle": "Big Narasimha Kavach",
+    "description": "",
+    "price": 499,
+    "tag": "New",
+    "image": "images/Big Narasimha Kavach locket.png",
+    "images": [
+      "images/Big Narasimha Kavach locket.png",
+      "images/Big Narasimha Kavach locket2.png"
+    ]
+  },
+  {
+    "id": 8,
+    "name": "BLACK SHYAMA TULSI MALA WITH NARASIMHA KAVACH",
+    "category": "Kanti Mala",
+    "subtitle": "SHYAMA TULSI MALA",
+    "description": "🌿 Beautiful Black Shyama Tulsi Mala, elegantly designed with premium German Silver and a Big Narasimha Kavach Pendant! 🙏 ✨ A perfect blend of devotion and traditional elegance.",
+    "price": 1600,
+    "tag": "New",
+    "image": "images/black shyam kanti mala1.png",
+    "images": [
+      "images/black shyam kanti mala1.png",
+      "images/black shyam kanti mala2.png"
+    ]
   }
 ]
