@@ -65,5 +65,18 @@
     "images": [
       "images/CB1peacock.png"
     ]
+  },
+          {
+    "id": 6,
+    "name": "3 in 1 Tulasi Mala with Big Narasimha Kavach",
+    "category": "Kanti Mala",
+    "subtitle": "🙏 Divine Tulsi Mala with Big Narasimha Kavach! 🦁",
+    "description": "A beautiful combination of clean, connected Tulsi beads, elegant lotus beads, and sacred Ram Tulsi, finished with a stunning big Narasimha Kavach.✨ Crafted with love and devotion.",
+    "price": 1250,
+    "tag": "New",
+    "image": "images/kantimala3RwN.png",
+    "images": [
+      "images/kantimala3RwN.png"
+    ]
   }
 ]
