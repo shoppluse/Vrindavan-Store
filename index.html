@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=8">
 </head>
 <body>
 
@@ -33,7 +33,10 @@
         <span>Catalog</span>
       </button>
 
-      <a href="#" class="brand-logo" onclick="closeProductDetail(); resetFilters();">SATTVA</a>
+      <a href="#" class="brand-wrap" onclick="closeProductDetail(); resetFilters();">
+        <span class="brand-logo">SATTVA</span>
+        <span class="brand-dedication">Dedicated to Srila Prabhupada</span>
+      </a>
 
       <div class="header-actions">
         <button class="icon-btn" title="Saved Items" onclick="alert('Wishlist items are saved locally in your browser.')">
@@ -172,7 +175,7 @@
       </div>
     </section>
 
-    <!-- Latest Arrivals Auto-Slider (1 in a row, cycles every 3s) -->
+    <!-- Latest Arrivals Auto-Slider (Latest product per category, cycles every 3s) -->
     <div class="section-header" id="latestArrivalsHeader">
       <h2 class="section-title">Latest Arrivals</h2>
       <div class="latest-dots" id="latestDots"></div>
@@ -417,7 +420,7 @@
               </p>
               <img id="upiQrImg" src="" alt="UPI Payment QR" style="width: 160px; height: 160px; margin: 0 auto 10px; border: 1px solid var(--border); background: #fff; padding: 6px;">
               <div style="display:flex; align-items:center; justify-content:center; gap:8px; font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 10px;">
-                <span>UPI ID: <span id="displayUpiId">9945243930-2@ibl</span></span>
+                <span>UPI ID: <span id="displayUpiId">Q637743750@ybl</span></span>
                 <button type="button" onclick="copyUpiId()" id="copyUpiBtn" style="border:1px solid var(--border); background:#fff; padding:4px 8px; font-size:11px; font-weight:600; cursor:pointer;">Copy</button>
               </div>
               <a id="upiPayLink" href="#" class="btn-primary" style="display: block; text-align: center; text-decoration: none; padding: 11px;">
@@ -453,6 +456,6 @@
     </aside>
   </div>
 
-  <script src="app.js?v=6"></script>
+  <script src="app.js?v=8"></script>
 </body>
 </html>
