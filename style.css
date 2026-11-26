@@ -104,12 +104,29 @@ header {
   cursor: pointer;
 }
 
+.brand-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  line-height: 1.1;
+}
+
 .brand-logo {
   font-family: var(--font-serif);
   font-size: 28px;
   font-weight: 500;
   letter-spacing: 0.18em;
   color: var(--text-primary);
+}
+
+.brand-dedication {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  margin-top: 2px;
 }
 
 .header-actions {
@@ -1354,6 +1371,14 @@ footer {
 }
 
 @media (max-width: 540px) {
+  .brand-logo {
+    font-size: 24px;
+  }
+
+  .brand-dedication {
+    font-size: 10px;
+  }
+
   .newsletter-band {
     padding: 22px 16px;
   }
