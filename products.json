@@ -106,5 +106,31 @@
       "images/black shyam kanti mala1.png",
       "images/black shyam kanti mala2.png"
     ]
+  },
+  {
+    "id": 9,
+    "name": "Gim Tulsi with white Pearls",
+    "category": "Kanti Mala",
+    "subtitle": "1 Round Gim Tulsi with white Pearls",
+    "description": "🌸 Divine Beauty of Tulsi & Pearls! 🙏 Presenting our beautiful Gim Tulsi Mala – One Round featuring elegant white pearls, a stunning Tulsi lotus pendant, delicate rectangular white pearl accents, and beautiful German Silver detailing. ✨ A perfect blend of devotion, tradition & elegance. ❤️",
+    "price": 1050,
+    "tag": "Few Left",
+    "image": "images/Gim Tulsi with white Pearls1.png",
+    "images": [
+      "images/Gim Tulsi with white Pearls1.png"
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Tulsi Mala with Shree Radhee Pendent",
+    "category": "Kanti Mala",
+    "subtitle": "🌸 Beautiful 3-Round Tulsi Mala with Shree Radhe Pendant 🌸",
+    "description": "A perfect blend of devotion and elegance! 🙏 ✨ 3-round Tulsi Mala 🖤 Beautiful Shyama Tulsi bead detailing 💖 Attractive Shree Radhe Pendant 🕉️ Designed with love and devotion",
+    "price": 1099,
+    "tag": "Few Left",
+    "image": "images/Tulsi Mala with Shree Radhee Pendent.png",
+    "images": [
+      "images/Tulsi Mala with Shree Radhee Pendent.png"
+    ]
   }
 ]
