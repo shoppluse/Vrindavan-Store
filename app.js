@@ -29,6 +29,16 @@ function getProductSizes(product) {
   return [];
 }
 
+// Fisher-Yates shuffle so the main product grid appears in a fresh order on every visit
+function shuffleArray(list) {
+  const arr = [...list];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
 // Load products dynamically from products.json
 async function loadProducts() {
   const grid = document.getElementById("productsGrid");
@@ -40,10 +50,15 @@ async function loadProducts() {
       throw new Error(`HTTP ${response.status}`);
     }
     const data = await response.json();
-    products = Array.isArray(data) ? data : [];
+    const rawProducts = Array.isArray(data) ? data : [];
+
+    // 1. Build Latest Arrivals from the unshuffled JSON order so the newest item per category wins
+    initLatestArrivalsSlider(rawProducts);
+
+    // 2. Shuffle products for the main Sacred Offerings grid on every page load
+    products = shuffleArray(rawProducts);
     showAllBtn.textContent = `Show All (${products.length})`;
     renderProducts(products);
-    initLatestArrivalsSlider(products);
     handleUrlHashProduct();
   } catch (error) {
     grid.innerHTML = `<p class="grid-status-msg">Unable to load products.json. Make sure you are running on a local server or GitHub Pages.</p>`;
